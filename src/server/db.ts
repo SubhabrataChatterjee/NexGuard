@@ -361,6 +361,18 @@ class DatabaseStore {
 
     if (!loadedData.users) loadedData.users = [];
     if (!loadedData.passwords) loadedData.passwords = {};
+    const defaultUserId = 'u-alex-demo-001';
+    const defaultAdminId = 'u-admin-demo-001';
+    if (!loadedData.passwords[defaultUserId] || !loadedData.passwords[defaultAdminId]) {
+      try {
+        const salt = bcrypt.genSaltSync(10);
+        const demoHash = bcrypt.hashSync('Password123!', salt);
+        if (!loadedData.passwords[defaultUserId]) loadedData.passwords[defaultUserId] = demoHash;
+        if (!loadedData.passwords[defaultAdminId]) loadedData.passwords[defaultAdminId] = demoHash;
+      } catch (e) {
+        console.error('Error generating demo password hashes:', e);
+      }
+    }
     if (!loadedData.verification_codes) loadedData.verification_codes = {};
     if (!loadedData.user_settings) loadedData.user_settings = [];
     if (!loadedData.trusted_contacts) loadedData.trusted_contacts = [];
