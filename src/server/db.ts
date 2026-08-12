@@ -354,14 +354,23 @@ class DatabaseStore {
       }
     }
 
-    // 3. Fallback to initial seed
-    if (!loadedData) {
+    // 3. Fallback to initial seed if empty or invalid
+    if (!loadedData || !Array.isArray(loadedData.users) || loadedData.users.length === 0) {
       loadedData = initialSeed();
     }
 
-    if (!loadedData.verification_codes) {
-      loadedData.verification_codes = {};
-    }
+    if (!loadedData.users) loadedData.users = [];
+    if (!loadedData.passwords) loadedData.passwords = {};
+    if (!loadedData.verification_codes) loadedData.verification_codes = {};
+    if (!loadedData.user_settings) loadedData.user_settings = [];
+    if (!loadedData.trusted_contacts) loadedData.trusted_contacts = [];
+    if (!loadedData.journeys) loadedData.journeys = [];
+    if (!loadedData.location_points) loadedData.location_points = [];
+    if (!loadedData.safety_checks) loadedData.safety_checks = [];
+    if (!loadedData.sos_events) loadedData.sos_events = [];
+    if (!loadedData.emergency_resources) loadedData.emergency_resources = [];
+    if (!loadedData.notifications) loadedData.notifications = [];
+    if (!loadedData.audit_logs) loadedData.audit_logs = [];
 
     this.data = loadedData;
     this.persist();

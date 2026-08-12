@@ -196,6 +196,44 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onSuccess, onClose }) => {
             </p>
           </div>
 
+          {/* Demo Account Quick Selector */}
+          {step === 'form' && mode === 'signin' && (
+            <div className="p-3.5 bg-[#f2f3f6] rounded-2xl border border-[#e1e2e5] space-y-2">
+              <div className="text-xs font-bold text-[#191c1e] flex items-center justify-between">
+                <span>Quick Demo Accounts</span>
+                <span className="text-[10px] text-[#532dcf] font-semibold bg-white px-2 py-0.5 rounded-full border border-[#e1e2e5]">1-Click Login</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('signin');
+                    setEmail('alex@nexguard.app');
+                    setPassword('Password123!');
+                    setError('');
+                  }}
+                  className="p-2 bg-white hover:bg-[#eef2ff] border border-[#dbe0fe] text-left rounded-xl transition-all hover:scale-[1.01]"
+                >
+                  <p className="text-xs font-bold text-[#191c1e]">Demo User</p>
+                  <p className="text-[10px] text-[#797586] truncate">alex@nexguard.app</p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('signin');
+                    setEmail('admin@nexguard.app');
+                    setPassword('Password123!');
+                    setError('');
+                  }}
+                  className="p-2 bg-white hover:bg-[#eef2ff] border border-[#dbe0fe] text-left rounded-xl transition-all hover:scale-[1.01]"
+                >
+                  <p className="text-xs font-bold text-[#191c1e]">Demo Admin</p>
+                  <p className="text-[10px] text-[#797586] truncate">admin@nexguard.app</p>
+                </button>
+              </div>
+            </div>
+          )}
+
           {error && (
             <div className="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-semibold rounded-2xl flex items-start gap-2">
               <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />

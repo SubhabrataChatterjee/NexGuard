@@ -12,9 +12,9 @@ export interface AuthenticatedRequest extends Request {
 export function generateToken(user: User): string {
   return jwt.sign(
     {
-      userId: user.id,
-      email: user.email,
-      role: user.role,
+      userId: user.id || 'u-unknown',
+      email: user.email || '',
+      role: user.role || 'USER',
     },
     JWT_SECRET,
     { expiresIn: '7d' }
@@ -30,7 +30,8 @@ export function authMiddleware(req: AuthenticatedRequest, res: Response, next: N
   const token = authHeader.substring(7);
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    const user = db.users.find((u) => u.id === decoded.userId && u.status === 'ACTIVE');
+    const userList = db.users || [];
+    const user = userList.find((u) => u && u.id === decoded.userId && u.status === 'ACTIVE');
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized: user not found or inactive' });
     }

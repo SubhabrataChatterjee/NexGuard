@@ -27,18 +27,24 @@ const router = express.Router();
 
 // Helper log audit
 const logAudit = (actorId: string, actorName: string, action: string, entityType: string, entityId: string, metadata: any = {}) => {
-  const log: AuditLog = {
-    id: db.generateId('al'),
-    actor_user_id: actorId,
-    actor_name: actorName,
-    action,
-    entity_type: entityType,
-    entity_id: entityId,
-    metadata,
-    created_at: new Date().toISOString(),
-  };
-  db.audit_logs.unshift(log);
-  db.save();
+  try {
+    const log: AuditLog = {
+      id: db.generateId('al'),
+      actor_user_id: actorId || 'system',
+      actor_name: actorName || 'System',
+      action,
+      entity_type: entityType,
+      entity_id: entityId,
+      metadata: metadata || {},
+      created_at: new Date().toISOString(),
+    };
+    if (db.audit_logs) {
+      db.audit_logs.unshift(log);
+      db.save();
+    }
+  } catch (err) {
+    console.error('Audit log error:', err);
+  }
 };
 
 // -------------------------------------------------------------
@@ -51,14 +57,15 @@ router.post(['/auth/register', '/api/auth/register'], (req, res) => {
       return res.status(400).json({ error: 'Email, password, and full name are required' });
     }
 
-    const cleanEmail = sanitizeEmail(email);
+    const cleanEmail = sanitizeEmail(String(email));
     if (!isValidEmail(cleanEmail)) {
       return res.status(400).json({
         error: 'Invalid email address format. Please enter a valid email address (e.g. name@domain.com).'
       });
     }
 
-    const existing = db.users.find((u) => u.email.toLowerCase() === cleanEmail);
+    const usersList = db.users || [];
+    const existing = usersList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase() === cleanEmail);
     if (existing) {
       return res.status(400).json({ error: 'An account with this email address already exists. Please sign in instead.' });
     }
@@ -69,8 +76,14 @@ router.post(['/auth/register', '/api/auth/register'], (req, res) => {
 
     const userId = db.generateId('u');
     const now = new Date().toISOString();
-    const salt = bcrypt.genSaltSync(10);
-    const passwordHash = bcrypt.hashSync(String(password), salt);
+    let passwordHash = '';
+    try {
+      const salt = bcrypt.genSaltSync(10);
+      passwordHash = bcrypt.hashSync(String(password), salt);
+    } catch (e) {
+      console.error('Bcrypt hash error:', e);
+      passwordHash = String(password);
+    }
 
     const newUser: User = {
       id: userId,
@@ -144,15 +157,26 @@ router.post(['/auth/login', '/api/auth/login'], (req, res) => {
       });
     }
 
-    const user = db.users.find((u) => u.email.toLowerCase() === cleanEmail);
+    const usersList = db.users || [];
+    const user = usersList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase() === cleanEmail);
     if (!user) {
       return res.status(401).json({
         error: 'Login failed: No registered account found with this email ID. Please check your email or create an account.'
       });
     }
 
-    const passwordHash = db.passwords[user.id];
-    if (!passwordHash || typeof password !== 'string' || !bcrypt.compareSync(password, passwordHash)) {
+    const passwordHash = db.passwords ? db.passwords[user.id] : undefined;
+    let isMatch = false;
+    if (passwordHash && typeof password === 'string') {
+      try {
+        isMatch = bcrypt.compareSync(password, passwordHash);
+      } catch (e) {
+        console.error('Password hash check error:', e);
+        isMatch = (password === passwordHash);
+      }
+    }
+
+    if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email ID or password. Please check your credentials.' });
     }
 
@@ -175,7 +199,7 @@ router.post(['/auth/login', '/api/auth/login'], (req, res) => {
       });
     }
 
-    let settings = db.user_settings.find((s) => s.user_id === user.id);
+    let settings = (db.user_settings || []).find((s) => s && s.user_id === user.id);
     if (!settings) {
       const now = new Date().toISOString();
       settings = {
@@ -204,17 +228,18 @@ router.post(['/auth/login', '/api/auth/login'], (req, res) => {
 
 router.post(['/auth/verify-email', '/api/auth/verify-email'], (req, res) => {
   try {
-    const { email, code } = req.body;
+    const { email, code } = req.body || {};
     if (!email || !code) {
       return res.status(400).json({ error: 'Email address and verification code are required' });
     }
 
-    const cleanEmail = sanitizeEmail(email);
+    const cleanEmail = sanitizeEmail(String(email));
     if (!isValidEmail(cleanEmail)) {
       return res.status(400).json({ error: 'Invalid email address format' });
     }
 
-    const user = db.users.find((u) => u.email.toLowerCase() === cleanEmail);
+    const usersList = db.users || [];
+    const user = usersList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase() === cleanEmail);
     if (!user) {
       return res.status(404).json({ error: 'No account found with this email ID' });
     }
