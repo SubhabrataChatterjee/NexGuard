@@ -15,8 +15,10 @@ import {
   AuditLog,
 } from '../types';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const DATA_DIR = isServerless ? '/tmp' : path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'nexguard_db.json');
+const SEED_FILE = path.join(process.cwd(), 'data', 'nexguard_db.json');
 
 interface DatabaseSchema {
   users: User[];
@@ -322,30 +324,54 @@ class DatabaseStore {
   private data: DatabaseSchema;
 
   constructor() {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
+    } catch (e) {
+      console.warn('Could not create data directory, fallback to memory:', e);
     }
 
+    let loadedData: DatabaseSchema | null = null;
+
+    // 1. Try reading existing file in DATA_DIR (/tmp or ./data)
     if (fs.existsSync(DB_FILE)) {
       try {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
-        this.data = JSON.parse(raw);
-        if (!this.data.verification_codes) {
-          this.data.verification_codes = {};
-        }
+        loadedData = JSON.parse(raw);
       } catch (err) {
-        console.error('Error reading db file, re-initializing database:', err);
-        this.data = initialSeed();
-        this.persist();
+        console.error('Error reading db file:', err);
       }
-    } else {
-      this.data = initialSeed();
-      this.persist();
     }
+
+    // 2. Fallback to repository SEED_FILE if available
+    if (!loadedData && fs.existsSync(SEED_FILE)) {
+      try {
+        const raw = fs.readFileSync(SEED_FILE, 'utf-8');
+        loadedData = JSON.parse(raw);
+      } catch (err) {
+        console.error('Error reading seed file:', err);
+      }
+    }
+
+    // 3. Fallback to initial seed
+    if (!loadedData) {
+      loadedData = initialSeed();
+    }
+
+    if (!loadedData.verification_codes) {
+      loadedData.verification_codes = {};
+    }
+
+    this.data = loadedData;
+    this.persist();
   }
 
   private persist() {
     try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
       fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
     } catch (err) {
       console.error('Failed to write database file:', err);
@@ -353,21 +379,54 @@ class DatabaseStore {
   }
 
   // --- Collections ---
-  public get users() { return this.data.users; }
-  public get passwords() { return this.data.passwords; }
+  public get users() { 
+    if (!this.data.users) this.data.users = [];
+    return this.data.users; 
+  }
+  public get passwords() { 
+    if (!this.data.passwords) this.data.passwords = {};
+    return this.data.passwords; 
+  }
   public get verification_codes() { 
     if (!this.data.verification_codes) this.data.verification_codes = {};
     return this.data.verification_codes; 
   }
-  public get user_settings() { return this.data.user_settings; }
-  public get trusted_contacts() { return this.data.trusted_contacts; }
-  public get journeys() { return this.data.journeys; }
-  public get location_points() { return this.data.location_points; }
-  public get safety_checks() { return this.data.safety_checks; }
-  public get sos_events() { return this.data.sos_events; }
-  public get emergency_resources() { return this.data.emergency_resources; }
-  public get notifications() { return this.data.notifications; }
-  public get audit_logs() { return this.data.audit_logs; }
+  public get user_settings() { 
+    if (!this.data.user_settings) this.data.user_settings = [];
+    return this.data.user_settings; 
+  }
+  public get trusted_contacts() { 
+    if (!this.data.trusted_contacts) this.data.trusted_contacts = [];
+    return this.data.trusted_contacts; 
+  }
+  public get journeys() { 
+    if (!this.data.journeys) this.data.journeys = [];
+    return this.data.journeys; 
+  }
+  public get location_points() { 
+    if (!this.data.location_points) this.data.location_points = [];
+    return this.data.location_points; 
+  }
+  public get safety_checks() { 
+    if (!this.data.safety_checks) this.data.safety_checks = [];
+    return this.data.safety_checks; 
+  }
+  public get sos_events() { 
+    if (!this.data.sos_events) this.data.sos_events = [];
+    return this.data.sos_events; 
+  }
+  public get emergency_resources() { 
+    if (!this.data.emergency_resources) this.data.emergency_resources = [];
+    return this.data.emergency_resources; 
+  }
+  public get notifications() { 
+    if (!this.data.notifications) this.data.notifications = [];
+    return this.data.notifications; 
+  }
+  public get audit_logs() { 
+    if (!this.data.audit_logs) this.data.audit_logs = [];
+    return this.data.audit_logs; 
+  }
 
   // --- CRUD Helper operations ---
   public save() {
@@ -375,7 +434,10 @@ class DatabaseStore {
   }
 
   public generateId(prefix: string = 'id'): string {
-    return `${prefix}-${crypto.randomUUID()}`;
+    const uuid = typeof crypto?.randomUUID === 'function' 
+      ? crypto.randomUUID() 
+      : Math.random().toString(36).substring(2) + Date.now().toString(36);
+    return `${prefix}-${uuid}`;
   }
 }
 

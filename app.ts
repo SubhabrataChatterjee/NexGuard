@@ -23,6 +23,8 @@ export const app = express();
 app.use(cors());
 app.use(express.json());
 
+const router = express.Router();
+
 // Helper log audit
 const logAudit = (actorId: string, actorName: string, action: string, entityType: string, entityId: string, metadata: any = {}) => {
   const log: AuditLog = {
@@ -42,9 +44,9 @@ const logAudit = (actorId: string, actorName: string, action: string, entityType
 // -------------------------------------------------------------
 // AUTH API
 // -------------------------------------------------------------
-app.post('/api/auth/register', (req, res) => {
+router.post(['/auth/register', '/api/auth/register'], (req, res) => {
   try {
-    const { email, password, full_name, phone } = req.body;
+    const { email, password, full_name, phone } = req.body || {};
     if (!email || !password || !full_name) {
       return res.status(400).json({ error: 'Email, password, and full name are required' });
     }
@@ -68,13 +70,13 @@ app.post('/api/auth/register', (req, res) => {
     const userId = db.generateId('u');
     const now = new Date().toISOString();
     const salt = bcrypt.genSaltSync(10);
-    const passwordHash = bcrypt.hashSync(password, salt);
+    const passwordHash = bcrypt.hashSync(String(password), salt);
 
     const newUser: User = {
       id: userId,
       email: cleanEmail,
-      full_name: full_name.trim(),
-      phone: phone ? phone.trim() : undefined,
+      full_name: String(full_name).trim(),
+      phone: phone ? String(phone).trim() : undefined,
       role: 'USER',
       status: 'ACTIVE',
       email_verified: false,
@@ -124,18 +126,18 @@ app.post('/api/auth/register', (req, res) => {
     });
   } catch (err: any) {
     console.error('Registration error:', err);
-    return res.status(500).json({ error: 'Failed to create account' });
+    return res.status(500).json({ error: err?.message || 'Failed to create account' });
   }
 });
 
-app.post('/api/auth/login', (req, res) => {
+router.post(['/auth/login', '/api/auth/login'], (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
     if (!email || !password) {
       return res.status(400).json({ error: 'Email address and password are required' });
     }
 
-    const cleanEmail = sanitizeEmail(email);
+    const cleanEmail = sanitizeEmail(String(email));
     if (!isValidEmail(cleanEmail)) {
       return res.status(400).json({
         error: 'Invalid email ID format. Please enter a valid email address (e.g. name@domain.com).'
@@ -150,7 +152,7 @@ app.post('/api/auth/login', (req, res) => {
     }
 
     const passwordHash = db.passwords[user.id];
-    if (!passwordHash || !bcrypt.compareSync(password, passwordHash)) {
+    if (!passwordHash || typeof password !== 'string' || !bcrypt.compareSync(password, passwordHash)) {
       return res.status(401).json({ error: 'Invalid email ID or password. Please check your credentials.' });
     }
 
@@ -196,11 +198,11 @@ app.post('/api/auth/login', (req, res) => {
     return res.json({ token, user, settings });
   } catch (err: any) {
     console.error('Login error:', err);
-    return res.status(500).json({ error: 'Failed to authenticate' });
+    return res.status(500).json({ error: err?.message || 'Failed to authenticate' });
   }
 });
 
-app.post('/api/auth/verify-email', (req, res) => {
+router.post(['/auth/verify-email', '/api/auth/verify-email'], (req, res) => {
   try {
     const { email, code } = req.body;
     if (!email || !code) {
@@ -258,10 +260,10 @@ app.post('/api/auth/verify-email', (req, res) => {
   }
 });
 
-app.post('/api/auth/resend-code', (req, res) => {
+router.post(['/auth/resend-code', '/api/auth/resend-code'], (req, res) => {
   try {
-    const { email } = req.body;
-    const cleanEmail = sanitizeEmail(email);
+    const { email } = req.body || {};
+    const cleanEmail = sanitizeEmail(String(email));
     if (!isValidEmail(cleanEmail)) {
       return res.status(400).json({ error: 'Invalid email ID format' });
     }
@@ -296,7 +298,7 @@ app.post('/api/auth/resend-code', (req, res) => {
   }
 });
 
-app.get('/api/auth/me', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/auth/me', '/api/auth/me'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const user = req.user!;
   const settings = db.user_settings.find((s) => s.user_id === user.id) || {
     id: db.generateId('s'),
@@ -312,7 +314,7 @@ app.get('/api/auth/me', authMiddleware, (req: AuthenticatedRequest, res) => {
   return res.json({ user, settings });
 });
 
-app.post('/api/auth/logout', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/auth/logout', '/api/auth/logout'], authMiddleware, (req: AuthenticatedRequest, res) => {
   logAudit(req.user!.id, req.user!.full_name, 'USER_LOGOUT', 'USER', req.user!.id);
   return res.json({ success: true });
 });
@@ -320,12 +322,12 @@ app.post('/api/auth/logout', authMiddleware, (req: AuthenticatedRequest, res) =>
 // -------------------------------------------------------------
 // USER SETTINGS API
 // -------------------------------------------------------------
-app.get('/api/user-settings', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/user-settings', '/api/user-settings'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const settings = db.user_settings.find((s) => s.user_id === req.user!.id);
   return res.json(settings || {});
 });
 
-app.patch('/api/user-settings', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.patch(['/user-settings', '/api/user-settings'], authMiddleware, (req: AuthenticatedRequest, res) => {
   let settings = db.user_settings.find((s) => s.user_id === req.user!.id);
   const now = new Date().toISOString();
   if (!settings) {
@@ -351,13 +353,13 @@ app.patch('/api/user-settings', authMiddleware, (req: AuthenticatedRequest, res)
 // -------------------------------------------------------------
 // TRUSTED CONTACTS API
 // -------------------------------------------------------------
-app.get('/api/trusted-contacts', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/trusted-contacts', '/api/trusted-contacts'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const contacts = db.trusted_contacts.filter((c) => c.owner_user_id === req.user!.id);
   return res.json(contacts);
 });
 
-app.post('/api/trusted-contacts', authMiddleware, (req: AuthenticatedRequest, res) => {
-  const { name, relationship, phone, email, permissions } = req.body;
+router.post(['/trusted-contacts', '/api/trusted-contacts'], authMiddleware, (req: AuthenticatedRequest, res) => {
+  const { name, relationship, phone, email, permissions } = req.body || {};
   if (!name || !relationship || (!phone && !email)) {
     return res.status(400).json({ error: 'Name, relationship, and contact number or email are required' });
   }
@@ -366,10 +368,10 @@ app.post('/api/trusted-contacts', authMiddleware, (req: AuthenticatedRequest, re
   const contact: TrustedContact = {
     id: db.generateId('tc'),
     owner_user_id: req.user!.id,
-    name: name.trim(),
-    relationship: relationship.trim(),
-    phone: phone ? phone.trim() : '',
-    email: email ? email.trim() : '',
+    name: String(name).trim(),
+    relationship: String(relationship).trim(),
+    phone: phone ? String(phone).trim() : '',
+    email: email ? String(email).trim() : '',
     status: 'ACTIVE',
     permissions: permissions || { sos_alerts: true, late_arrival_alerts: true, location_sharing: true },
     created_at: now,
@@ -383,26 +385,26 @@ app.post('/api/trusted-contacts', authMiddleware, (req: AuthenticatedRequest, re
   return res.status(201).json(contact);
 });
 
-app.patch('/api/trusted-contacts/:id', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.patch(['/trusted-contacts/:id', '/api/trusted-contacts/:id'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const contact = db.trusted_contacts.find((c) => c.id === req.params.id && c.owner_user_id === req.user!.id);
   if (!contact) {
     return res.status(404).json({ error: 'Contact not found' });
   }
 
   const now = new Date().toISOString();
-  if (req.body.name) contact.name = req.body.name.trim();
-  if (req.body.relationship) contact.relationship = req.body.relationship.trim();
-  if (req.body.phone !== undefined) contact.phone = req.body.phone.trim();
-  if (req.body.email !== undefined) contact.email = req.body.email.trim();
-  if (req.body.permissions) contact.permissions = { ...contact.permissions, ...req.body.permissions };
-  if (req.body.status) contact.status = req.body.status;
+  if (req.body?.name) contact.name = String(req.body.name).trim();
+  if (req.body?.relationship) contact.relationship = String(req.body.relationship).trim();
+  if (req.body?.phone !== undefined) contact.phone = String(req.body.phone).trim();
+  if (req.body?.email !== undefined) contact.email = String(req.body.email).trim();
+  if (req.body?.permissions) contact.permissions = { ...contact.permissions, ...req.body.permissions };
+  if (req.body?.status) contact.status = req.body.status;
   contact.updated_at = now;
 
   db.save();
   return res.json(contact);
 });
 
-app.delete('/api/trusted-contacts/:id', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.delete(['/trusted-contacts/:id', '/api/trusted-contacts/:id'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const index = db.trusted_contacts.findIndex((c) => c.id === req.params.id && c.owner_user_id === req.user!.id);
   if (index === -1) {
     return res.status(404).json({ error: 'Contact not found' });
@@ -418,21 +420,21 @@ app.delete('/api/trusted-contacts/:id', authMiddleware, (req: AuthenticatedReque
 // -------------------------------------------------------------
 // JOURNEYS API
 // -------------------------------------------------------------
-app.get('/api/journeys', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/journeys', '/api/journeys'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const userJourneys = db.journeys
     .filter((j) => j.user_id === req.user!.id)
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   return res.json(userJourneys);
 });
 
-app.get('/api/journeys/active', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/journeys/active', '/api/journeys/active'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const active = db.journeys.find(
     (j) => j.user_id === req.user!.id && ['ACTIVE', 'CHECKING_IN', 'SOS_ACTIVE'].includes(j.status)
   );
   return res.json(active || null);
 });
 
-app.get('/api/journeys/:id', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/journeys/:id', '/api/journeys/:id'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const journey = db.journeys.find((j) => j.id === req.params.id && j.user_id === req.user!.id);
   if (!journey) {
     return res.status(404).json({ error: 'Journey not found' });
@@ -440,7 +442,7 @@ app.get('/api/journeys/:id', authMiddleware, (req: AuthenticatedRequest, res) =>
   return res.json(journey);
 });
 
-app.post('/api/journeys', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/journeys', '/api/journeys'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const {
     destination_name,
     destination_latitude,
@@ -454,7 +456,7 @@ app.post('/api/journeys', authMiddleware, (req: AuthenticatedRequest, res) => {
     monitoring_enabled,
     route_monitoring_enabled,
     arrival_check_enabled,
-  } = req.body;
+  } = req.body || {};
 
   if (!destination_name) {
     return res.status(400).json({ error: 'Destination name is required' });
@@ -478,7 +480,7 @@ app.post('/api/journeys', authMiddleware, (req: AuthenticatedRequest, res) => {
   const journey: Journey = {
     id: db.generateId('j'),
     user_id: req.user!.id,
-    destination_name: destination_name.trim(),
+    destination_name: String(destination_name).trim(),
     destination_latitude: destination_latitude || 22.5726,
     destination_longitude: destination_longitude || 88.3639,
     start_location_name: start_location_name || 'Current Location',
@@ -531,7 +533,7 @@ app.post('/api/journeys', authMiddleware, (req: AuthenticatedRequest, res) => {
   return res.status(201).json(journey);
 });
 
-app.post('/api/journeys/:id/complete', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/journeys/:id/complete', '/api/journeys/:id/complete'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const journey = db.journeys.find((j) => j.id === req.params.id && j.user_id === req.user!.id);
   if (!journey) {
     return res.status(404).json({ error: 'Journey not found' });
@@ -564,7 +566,7 @@ app.post('/api/journeys/:id/complete', authMiddleware, (req: AuthenticatedReques
   return res.json(journey);
 });
 
-app.post('/api/journeys/:id/cancel', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/journeys/:id/cancel', '/api/journeys/:id/cancel'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const journey = db.journeys.find((j) => j.id === req.params.id && j.user_id === req.user!.id);
   if (!journey) {
     return res.status(404).json({ error: 'Journey not found' });
@@ -582,13 +584,13 @@ app.post('/api/journeys/:id/cancel', authMiddleware, (req: AuthenticatedRequest,
 // -------------------------------------------------------------
 // LOCATION INGESTION API
 // -------------------------------------------------------------
-app.post('/api/journeys/:id/location', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/journeys/:id/location', '/api/journeys/:id/location'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const journey = db.journeys.find((j) => j.id === req.params.id && j.user_id === req.user!.id);
   if (!journey) {
     return res.status(404).json({ error: 'Journey not found' });
   }
 
-  const { latitude, longitude, accuracy_meters, speed_mps, heading_degrees, battery_percent } = req.body;
+  const { latitude, longitude, accuracy_meters, speed_mps, heading_degrees, battery_percent } = req.body || {};
   if (latitude === undefined || longitude === undefined) {
     return res.status(400).json({ error: 'Latitude and longitude are required' });
   }
@@ -614,7 +616,7 @@ app.post('/api/journeys/:id/location', authMiddleware, (req: AuthenticatedReques
   return res.status(201).json(point);
 });
 
-app.get('/api/journeys/:id/location/latest', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/journeys/:id/location/latest', '/api/journeys/:id/location/latest'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const points = db.location_points.filter((lp) => lp.journey_id === req.params.id);
   if (points.length === 0) {
     return res.json(null);
@@ -626,12 +628,12 @@ app.get('/api/journeys/:id/location/latest', authMiddleware, (req: Authenticated
 // -------------------------------------------------------------
 // SAFETY CHECK & ESCALATION API
 // -------------------------------------------------------------
-app.get('/api/journeys/:id/safety-check', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/journeys/:id/safety-check', '/api/journeys/:id/safety-check'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const activeCheck = db.safety_checks.find((sc) => sc.journey_id === req.params.id && sc.status === 'PENDING');
   return res.json(activeCheck || null);
 });
 
-app.post('/api/journeys/:id/safety-check/trigger', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/journeys/:id/safety-check/trigger', '/api/journeys/:id/safety-check/trigger'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const journey = db.journeys.find((j) => j.id === req.params.id && j.user_id === req.user!.id);
   if (!journey) {
     return res.status(404).json({ error: 'Journey not found' });
@@ -642,7 +644,7 @@ app.post('/api/journeys/:id/safety-check/trigger', authMiddleware, (req: Authent
     id: db.generateId('sc'),
     journey_id: journey.id,
     user_id: req.user!.id,
-    trigger_type: req.body.trigger_type || 'MANUAL',
+    trigger_type: req.body?.trigger_type || 'MANUAL',
     status: 'PENDING',
     requested_at: now.toISOString(),
     responded_at: null,
@@ -666,8 +668,8 @@ app.post('/api/journeys/:id/safety-check/trigger', authMiddleware, (req: Authent
   return res.status(201).json(check);
 });
 
-app.post('/api/journeys/:id/safety-check/respond', authMiddleware, (req: AuthenticatedRequest, res) => {
-  const { response_type } = req.body;
+router.post(['/journeys/:id/safety-check/respond', '/api/journeys/:id/safety-check/respond'], authMiddleware, (req: AuthenticatedRequest, res) => {
+  const { response_type } = req.body || {};
   const journey = db.journeys.find((j) => j.id === req.params.id && j.user_id === req.user!.id);
   if (!journey) {
     return res.status(404).json({ error: 'Journey not found' });
@@ -725,13 +727,13 @@ app.post('/api/journeys/:id/safety-check/respond', authMiddleware, (req: Authent
 // -------------------------------------------------------------
 // SOS EMERGENCY API (Idempotent)
 // -------------------------------------------------------------
-app.get('/api/sos/active', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/sos/active', '/api/sos/active'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const activeSos = db.sos_events.find((s) => s.user_id === req.user!.id && s.status === 'ACTIVE');
   return res.json(activeSos || null);
 });
 
-app.post('/api/sos', authMiddleware, (req: AuthenticatedRequest, res) => {
-  const { latitude, longitude, location_name, battery_percent } = req.body;
+router.post(['/sos', '/api/sos'], authMiddleware, (req: AuthenticatedRequest, res) => {
+  const { latitude, longitude, location_name, battery_percent } = req.body || {};
   const userId = req.user!.id;
 
   const existingActive = db.sos_events.find((s) => s.user_id === userId && s.status === 'ACTIVE');
@@ -794,13 +796,13 @@ app.post('/api/sos', authMiddleware, (req: AuthenticatedRequest, res) => {
   return res.status(201).json(sosEvent);
 });
 
-app.post('/api/sos/:id/cancel', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/sos/:id/cancel', '/api/sos/:id/cancel'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const sosEvent = db.sos_events.find((s) => s.id === req.params.id && s.user_id === req.user!.id);
   if (!sosEvent) {
     return res.status(404).json({ error: 'SOS Event not found' });
   }
 
-  const { resolution_reason } = req.body;
+  const { resolution_reason } = req.body || {};
   const now = new Date().toISOString();
   sosEvent.status = 'CANCELLED';
   sosEvent.resolved_at = now;
@@ -823,7 +825,7 @@ app.post('/api/sos/:id/cancel', authMiddleware, (req: AuthenticatedRequest, res)
 // -------------------------------------------------------------
 // EMERGENCY RESOURCES API
 // -------------------------------------------------------------
-app.get('/api/emergency-resources', (req, res) => {
+router.get(['/emergency-resources', '/api/emergency-resources'], (req, res) => {
   const { type, lat, lng } = req.query;
   let resources = db.emergency_resources.filter((r) => r.status === 'ACTIVE');
   if (type && typeof type === 'string' && type !== 'ALL') {
@@ -867,14 +869,14 @@ app.get('/api/emergency-resources', (req, res) => {
 // -------------------------------------------------------------
 // NOTIFICATIONS API
 // -------------------------------------------------------------
-app.get('/api/notifications', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.get(['/notifications', '/api/notifications'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const userNotifications = db.notifications
     .filter((n) => n.user_id === req.user!.id)
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   return res.json(userNotifications);
 });
 
-app.post('/api/notifications/:id/read', authMiddleware, (req: AuthenticatedRequest, res) => {
+router.post(['/notifications/:id/read', '/api/notifications/:id/read'], authMiddleware, (req: AuthenticatedRequest, res) => {
   const notif = db.notifications.find((n) => n.id === req.params.id && n.user_id === req.user!.id);
   if (notif) {
     notif.read_at = new Date().toISOString();
@@ -886,9 +888,9 @@ app.post('/api/notifications/:id/read', authMiddleware, (req: AuthenticatedReque
 // -------------------------------------------------------------
 // AI ASSISTANT CHAT API
 // -------------------------------------------------------------
-app.post('/api/assistant/chat', authMiddleware, async (req: AuthenticatedRequest, res) => {
+router.post(['/assistant/chat', '/api/assistant/chat'], authMiddleware, async (req: AuthenticatedRequest, res) => {
   try {
-    const { message, context } = req.body;
+    const { message, context } = req.body || {};
     if (!message) {
       return res.status(400).json({ error: 'Message is required' });
     }
@@ -904,7 +906,7 @@ app.post('/api/assistant/chat', authMiddleware, async (req: AuthenticatedRequest
 // -------------------------------------------------------------
 // ADMIN API
 // -------------------------------------------------------------
-app.get('/api/admin/stats', authMiddleware, roleGuard(['ADMIN', 'SAFETY_OPERATOR']), (req, res) => {
+router.get(['/admin/stats', '/api/admin/stats'], authMiddleware, roleGuard(['ADMIN', 'SAFETY_OPERATOR']), (req, res) => {
   return res.json({
     total_users: db.users.length,
     active_journeys: db.journeys.filter((j) => ['ACTIVE', 'CHECKING_IN', 'SOS_ACTIVE'].includes(j.status)).length,
@@ -914,14 +916,24 @@ app.get('/api/admin/stats', authMiddleware, roleGuard(['ADMIN', 'SAFETY_OPERATOR
   });
 });
 
-app.get('/api/admin/audit-logs', authMiddleware, roleGuard(['ADMIN']), (req, res) => {
+router.get(['/admin/audit-logs', '/api/admin/audit-logs'], authMiddleware, roleGuard(['ADMIN']), (req, res) => {
   return res.json(db.audit_logs.slice(0, 50));
 });
 
-app.get('/api/admin/all-journeys', authMiddleware, roleGuard(['ADMIN', 'SAFETY_OPERATOR']), (req, res) => {
+router.get(['/admin/all-journeys', '/api/admin/all-journeys'], authMiddleware, roleGuard(['ADMIN', 'SAFETY_OPERATOR']), (req, res) => {
   return res.json(db.journeys);
 });
 
-app.get('/api/admin/all-sos', authMiddleware, roleGuard(['ADMIN', 'SAFETY_OPERATOR']), (req, res) => {
+router.get(['/admin/all-sos', '/api/admin/all-sos'], authMiddleware, roleGuard(['ADMIN', 'SAFETY_OPERATOR']), (req, res) => {
   return res.json(db.sos_events);
+});
+
+// Mount router on app for both /api prefix and root
+app.use('/api', router);
+app.use('/', router);
+
+// Global Express Error Handler to prevent Serverless Functions crash (500)
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Server unhandled error:', err);
+  res.status(500).json({ error: err?.message || 'An internal server error occurred.' });
 });
