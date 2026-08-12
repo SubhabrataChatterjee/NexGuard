@@ -29,11 +29,21 @@ export function authMiddleware(req: AuthenticatedRequest, res: Response, next: N
 
   const token = authHeader.substring(7);
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId?: string; email?: string; role?: UserRole };
     const userList = db.users || [];
-    const user = userList.find((u) => u && u.id === decoded.userId && u.status === 'ACTIVE');
+    let user = userList.find((u) => u && decoded.userId && u.id === decoded.userId);
+
+    if (!user && decoded.email) {
+      const cleanEmail = decoded.email.toLowerCase().trim();
+      user = userList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase().trim() === cleanEmail);
+    }
+
     if (!user) {
-      return res.status(401).json({ error: 'Unauthorized: user not found or inactive' });
+      return res.status(401).json({ error: 'Unauthorized: user account not found or session expired' });
+    }
+
+    if (user.status !== 'ACTIVE') {
+      return res.status(401).json({ error: 'Unauthorized: user account is inactive' });
     }
 
     req.user = user;

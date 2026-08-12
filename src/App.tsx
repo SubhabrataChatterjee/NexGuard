@@ -51,9 +51,11 @@ export function App() {
 
         // Load application datasets
         await refreshUserData();
-      } catch (err) {
-        console.error('Session restoration error:', err);
+      } catch (err: any) {
+        // Clear stale token gracefully on invalid or expired session
         localStorage.removeItem('nexguard_token');
+        setUser(null);
+        setSettings(null);
         setCurrentTab('hero');
       } finally {
         setInitialLoading(false);

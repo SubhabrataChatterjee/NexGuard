@@ -359,8 +359,20 @@ class DatabaseStore {
       loadedData = initialSeed();
     }
 
-    if (!loadedData.users) loadedData.users = [];
-    if (!loadedData.passwords) loadedData.passwords = {};
+    // Ensure array cleanliness
+    loadedData.users = (loadedData.users || []).filter(Boolean);
+    loadedData.passwords = loadedData.passwords || {};
+    loadedData.verification_codes = loadedData.verification_codes || {};
+    loadedData.user_settings = (loadedData.user_settings || []).filter(Boolean);
+    loadedData.trusted_contacts = (loadedData.trusted_contacts || []).filter(Boolean);
+    loadedData.journeys = (loadedData.journeys || []).filter(Boolean);
+    loadedData.location_points = (loadedData.location_points || []).filter(Boolean);
+    loadedData.safety_checks = (loadedData.safety_checks || []).filter(Boolean);
+    loadedData.sos_events = (loadedData.sos_events || []).filter(Boolean);
+    loadedData.emergency_resources = (loadedData.emergency_resources || []).filter(Boolean);
+    loadedData.notifications = (loadedData.notifications || []).filter(Boolean);
+    loadedData.audit_logs = (loadedData.audit_logs || []).filter(Boolean);
+
     const defaultUserId = 'u-alex-demo-001';
     const defaultAdminId = 'u-admin-demo-001';
     if (!loadedData.passwords[defaultUserId] || !loadedData.passwords[defaultAdminId]) {
@@ -373,16 +385,6 @@ class DatabaseStore {
         console.error('Error generating demo password hashes:', e);
       }
     }
-    if (!loadedData.verification_codes) loadedData.verification_codes = {};
-    if (!loadedData.user_settings) loadedData.user_settings = [];
-    if (!loadedData.trusted_contacts) loadedData.trusted_contacts = [];
-    if (!loadedData.journeys) loadedData.journeys = [];
-    if (!loadedData.location_points) loadedData.location_points = [];
-    if (!loadedData.safety_checks) loadedData.safety_checks = [];
-    if (!loadedData.sos_events) loadedData.sos_events = [];
-    if (!loadedData.emergency_resources) loadedData.emergency_resources = [];
-    if (!loadedData.notifications) loadedData.notifications = [];
-    if (!loadedData.audit_logs) loadedData.audit_logs = [];
 
     this.data = loadedData;
     this.persist();
