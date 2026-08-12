@@ -1,0 +1,598 @@
+{
+  "users": [
+    {
+      "id": "u-alex-demo-001",
+      "email": "alex@nexguard.app",
+      "full_name": "Alex Johnson",
+      "phone": "+1 (555) 234-5678",
+      "avatar_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80",
+      "role": "USER",
+      "status": "ACTIVE",
+      "email_verified": true,
+      "timezone": "America/New_York",
+      "created_at": "2026-08-12T10:45:23.764Z",
+      "updated_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "u-admin-demo-001",
+      "email": "admin@nexguard.app",
+      "full_name": "NexGuard Admin",
+      "phone": "+1 (555) 999-0000",
+      "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80",
+      "role": "ADMIN",
+      "status": "ACTIVE",
+      "email_verified": true,
+      "timezone": "America/New_York",
+      "created_at": "2026-08-12T10:45:23.764Z",
+      "updated_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
+      "email": "mnjhbjqj@gmail.com",
+      "full_name": "n b h h",
+      "phone": "78877668900",
+      "role": "USER",
+      "status": "ACTIVE",
+      "email_verified": true,
+      "timezone": "America/New_York",
+      "created_at": "2026-08-12T10:54:44.502Z",
+      "updated_at": "2026-08-12T10:54:44.502Z"
+    },
+    {
+      "id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "email": "itzrjbeatzghosh@gmail.com",
+      "full_name": "subha",
+      "phone": "123456789",
+      "role": "USER",
+      "status": "ACTIVE",
+      "email_verified": true,
+      "timezone": "America/New_York",
+      "created_at": "2026-08-12T11:11:46.594Z",
+      "updated_at": "2026-08-12T11:12:03.505Z"
+    }
+  ],
+  "passwords": {
+    "u-alex-demo-001": "$2b$10$1Aw1.N2ghr/YZpJce0ESB.yZ9LbmqjWBTefH9ZqGqfyRen9kFncYC",
+    "u-admin-demo-001": "$2b$10$1Aw1.N2ghr/YZpJce0ESB.yZ9LbmqjWBTefH9ZqGqfyRen9kFncYC",
+    "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8": "$2b$10$5vaRwDF3hmGrYG5VwmoYo.wIAqYlHIUugKancq9PnGEl4uis2p5Ou",
+    "u-18d56e2f-fdba-4f48-a931-f269e199b5e1": "$2b$10$o9ynkVpvGc7f0/k2BFPZTuqX0LJNxEcKNurSVNypJ8rwLyQ69P3jy"
+  },
+  "user_settings": [
+    {
+      "id": "s-alex-001",
+      "user_id": "u-alex-demo-001",
+      "location_sharing_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "default_grace_period_minutes": 10,
+      "notification_enabled": true,
+      "created_at": "2026-08-12T10:45:23.764Z",
+      "updated_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "s-6bcab457-c5f8-442a-88c8-553af242c386",
+      "user_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
+      "location_sharing_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "default_grace_period_minutes": 10,
+      "notification_enabled": true,
+      "created_at": "2026-08-12T10:54:44.502Z",
+      "updated_at": "2026-08-12T10:54:44.502Z"
+    },
+    {
+      "id": "s-3abc9e2d-607e-4c86-adc2-8aa2618f6bf2",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "location_sharing_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "default_grace_period_minutes": 10,
+      "notification_enabled": true,
+      "created_at": "2026-08-12T11:11:46.594Z",
+      "updated_at": "2026-08-12T11:11:46.594Z"
+    }
+  ],
+  "trusted_contacts": [
+    {
+      "id": "tc-001",
+      "owner_user_id": "u-alex-demo-001",
+      "name": "Sarah Johnson",
+      "relationship": "Sister",
+      "phone": "+1 (555) 123-4567",
+      "email": "sarah.j@example.com",
+      "status": "ACTIVE",
+      "permissions": {
+        "sos_alerts": true,
+        "late_arrival_alerts": true,
+        "location_sharing": true
+      },
+      "created_at": "2026-08-12T10:45:23.764Z",
+      "updated_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "tc-002",
+      "owner_user_id": "u-alex-demo-001",
+      "name": "David Miller",
+      "relationship": "Partner",
+      "phone": "+1 (555) 987-6543",
+      "email": "david.m@example.com",
+      "status": "ACTIVE",
+      "permissions": {
+        "sos_alerts": true,
+        "late_arrival_alerts": true,
+        "location_sharing": true
+      },
+      "created_at": "2026-08-12T10:45:23.764Z",
+      "updated_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "tc-003",
+      "owner_user_id": "u-alex-demo-001",
+      "name": "Campus Security Office",
+      "relationship": "University Emergency",
+      "phone": "+1 (555) 333-4444",
+      "email": "security@university.edu",
+      "status": "ACTIVE",
+      "permissions": {
+        "sos_alerts": true,
+        "late_arrival_alerts": false,
+        "location_sharing": true
+      },
+      "created_at": "2026-08-12T10:45:23.764Z",
+      "updated_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687",
+      "owner_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "name": "suvha",
+      "relationship": "Father",
+      "phone": "9658745221",
+      "email": "",
+      "status": "ACTIVE",
+      "permissions": {
+        "sos_alerts": true,
+        "late_arrival_alerts": true,
+        "location_sharing": true
+      },
+      "created_at": "2026-08-12T11:12:58.979Z",
+      "updated_at": "2026-08-12T11:12:58.979Z"
+    }
+  ],
+  "journeys": [
+    {
+      "id": "j-9ce4d7dc-301d-4068-a46b-9d893bc5d306",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "destination_name": "Salt Lake Sector V, Salt Lake Bypass, CL Block, Sector V, Bidhannagar, Kolkata Metropolitan Area, Rajarhat, North 24 Parganas, West Bengal, 700091, India",
+      "destination_latitude": 22.5809434,
+      "destination_longitude": 88.4290872,
+      "start_location_name": "Current Location",
+      "start_latitude": 22.908842,
+      "start_longitude": 88.417824,
+      "started_at": "2026-08-12T11:32:38.979Z",
+      "expected_arrival_at": "2026-08-12T11:52:38.979Z",
+      "grace_period_minutes": 10,
+      "actual_arrival_at": null,
+      "status": "ACTIVE",
+      "trusted_contact_ids": [
+        "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687"
+      ],
+      "monitoring_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "safety_score": 9.2,
+      "created_at": "2026-08-12T11:32:38.979Z",
+      "updated_at": "2026-08-12T11:32:38.979Z"
+    },
+    {
+      "id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "destination_name": "aot",
+      "destination_latitude": 40.73061,
+      "destination_longitude": -73.935242,
+      "start_location_name": "Current Location",
+      "start_latitude": 40.7128,
+      "start_longitude": -74.006,
+      "started_at": "2026-08-12T11:13:28.976Z",
+      "expected_arrival_at": "2026-08-12T11:33:28.976Z",
+      "grace_period_minutes": 10,
+      "actual_arrival_at": "2026-08-12T11:32:09.337Z",
+      "status": "COMPLETED",
+      "trusted_contact_ids": [
+        "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687"
+      ],
+      "monitoring_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "safety_score": 9.2,
+      "created_at": "2026-08-12T11:13:28.976Z",
+      "updated_at": "2026-08-12T11:32:09.337Z"
+    }
+  ],
+  "location_points": [
+    {
+      "id": "lp-3b3bf38b-d4a1-4af8-add2-995d113d2a9e",
+      "journey_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "accuracy_meters": 5,
+      "speed_mps": 1.2,
+      "heading_degrees": 45,
+      "battery_percent": 88,
+      "recorded_at": "2026-08-12T11:13:28.976Z"
+    },
+    {
+      "id": "lp-bbab4ae2-e040-4508-9713-c85f17bf5440",
+      "journey_id": "j-9ce4d7dc-301d-4068-a46b-9d893bc5d306",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "latitude": 22.908842,
+      "longitude": 88.417824,
+      "accuracy_meters": 5,
+      "speed_mps": 1.2,
+      "heading_degrees": 45,
+      "battery_percent": 88,
+      "recorded_at": "2026-08-12T11:32:38.979Z"
+    }
+  ],
+  "safety_checks": [],
+  "sos_events": [
+    {
+      "id": "sos-021641eb-b6f0-4cd5-a8b6-e9a4fb9132fc",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "journey_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
+      "trigger_type": "MANUAL_SOS",
+      "status": "CANCELLED",
+      "activated_at": "2026-08-12T11:16:52.314Z",
+      "resolved_at": "2026-08-12T11:20:07.251Z",
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "location_name": "aot",
+      "battery_percent": 78,
+      "notified_contacts": [
+        {
+          "id": "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687",
+          "name": "suvha",
+          "phone": "9658745221",
+          "status": "DELIVERED"
+        }
+      ],
+      "created_at": "2026-08-12T11:16:52.314Z",
+      "updated_at": "2026-08-12T11:20:07.251Z",
+      "resolution_reason": "Accidental trigger / Safe now"
+    }
+  ],
+  "emergency_resources": [
+    {
+      "id": "er-001",
+      "name": "Lalbazar Police Headquarters & Central Control Room",
+      "type": "POLICE",
+      "address": "18 Lalbazar Street, Bowbazar, Kolkata, West Bengal 700001, India",
+      "latitude": 22.5714,
+      "longitude": 88.3582,
+      "phone": "112 / 100 / 033-22145000",
+      "is_verified": true,
+      "distance_km": 0.8,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-002",
+      "name": "SSKM Hospital & IPGMER Emergency Trauma Center",
+      "type": "HOSPITAL",
+      "address": "244 AJC Bose Road, Bhowanipore, Kolkata, West Bengal 700020, India",
+      "latitude": 22.5392,
+      "longitude": 88.3432,
+      "phone": "108 / 102 / 033-22231589",
+      "is_verified": true,
+      "distance_km": 1.9,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-003",
+      "name": "West Bengal Women Safety Control Room & Helpline",
+      "type": "SAFE_PUBLIC_LOCATION",
+      "address": "1091 Women Safety HQ, Salt Lake Sector V, Kolkata, West Bengal 700091",
+      "latitude": 22.5802,
+      "longitude": 88.4370,
+      "phone": "1091 / 181 / 112",
+      "is_verified": true,
+      "distance_km": 1.2,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-004",
+      "name": "Bidhannagar Police Commissionerate & Salt Lake Sector V PS",
+      "type": "POLICE",
+      "address": "Sector V, Salt Lake City, Kolkata, West Bengal 700091, India",
+      "latitude": 22.5790,
+      "longitude": 88.4340,
+      "phone": "112 / 100 / 033-23671092",
+      "is_verified": true,
+      "distance_km": 1.5,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-005",
+      "name": "Park Street Police Station & Women Assistance Cell",
+      "type": "POLICE",
+      "address": "3 Park Street, Kolkata, West Bengal 700016, India",
+      "latitude": 22.5532,
+      "longitude": 88.3524,
+      "phone": "112 / 100 / 033-22268300",
+      "is_verified": true,
+      "distance_km": 2.1,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-006",
+      "name": "Medical College Hospital Kolkata (MCH ER)",
+      "type": "HOSPITAL",
+      "address": "88 College Street, Bowbazar, Kolkata, West Bengal 700073, India",
+      "latitude": 22.5746,
+      "longitude": 88.3629,
+      "phone": "108 / 033-22414901",
+      "is_verified": true,
+      "distance_km": 0.9,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-007",
+      "name": "R. G. Kar Medical College & Hospital Emergency",
+      "type": "HOSPITAL",
+      "address": "1 Kshudiram Bose Sarani, Belgachia, Kolkata, West Bengal 700004, India",
+      "latitude": 22.6041,
+      "longitude": 88.3788,
+      "phone": "108 / 033-25557676",
+      "is_verified": true,
+      "distance_km": 4.2,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-008",
+      "name": "NRS Medical College & Hospital Emergency",
+      "type": "HOSPITAL",
+      "address": "138 AJC Bose Road, Sealdah, Kolkata, West Bengal 700014, India",
+      "latitude": 22.5638,
+      "longitude": 88.3695,
+      "phone": "108 / 033-22860033",
+      "is_verified": true,
+      "distance_km": 1.8,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-009",
+      "name": "Apollo Multispecialty Hospital 24x7 Emergency",
+      "type": "HOSPITAL",
+      "address": "58 Canal Circular Road, Kadapara, Phoolbagan, Kolkata, West Bengal 700054",
+      "latitude": 22.5783,
+      "longitude": 88.3978,
+      "phone": "108 / 033-23203040",
+      "is_verified": true,
+      "distance_km": 3.5,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-010",
+      "name": "West Bengal Fire & Emergency Services HQ",
+      "type": "FIRE_STATION",
+      "address": "13D Mirza Ghalib Street, Park Street, Kolkata, West Bengal 700016, India",
+      "latitude": 22.5539,
+      "longitude": 88.3551,
+      "phone": "101 / 112 / 033-22521165",
+      "is_verified: true,
+      "distance_km": 2.2,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-011",
+      "name": "Howrah Police Station & Railway Emergency Desk",
+      "type": "POLICE",
+      "address": "MG Road, Howrah Railway Station Area, Howrah, West Bengal 711101, India",
+      "latitude": 22.5851,
+      "longitude": 88.3412,
+      "phone": "112 / 100 / 033-26382020",
+      "is_verified": true,
+      "distance_km": 3.1,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    },
+    {
+      "id": "er-012",
+      "name": "Siliguri Police Station & North Bengal Emergency Desk",
+      "type": "POLICE",
+      "address": "Hill Cart Road, Siliguri, West Bengal 734001, India",
+      "latitude": 26.7271,
+      "longitude": 88.4312,
+      "phone": "112 / 100 / 0353-2432100",
+      "is_verified": true,
+      "distance_km": 550,
+      "status": "ACTIVE",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "n-f164cab7-99de-474d-a6f2-6823de3ad81a",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "type": "JOURNEY_STARTED",
+      "title": "Safe Journey Started",
+      "message": "Journey to \"Salt Lake Sector V, Salt Lake Bypass, CL Block, Sector V, Bidhannagar, Kolkata Metropolitan Area, Rajarhat, North 24 Parganas, West Bengal, 700091, India\" is active. Your trusted contacts have been informed.",
+      "read_at": null,
+      "created_at": "2026-08-12T11:32:38.979Z"
+    },
+    {
+      "id": "n-d4061347-53d2-45aa-96fe-f7ad19d87f6b",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "type": "JOURNEY_COMPLETED",
+      "title": "Safe Arrival Confirmed",
+      "message": "You arrived safely at aot. Location sharing has automatically ended.",
+      "read_at": null,
+      "created_at": "2026-08-12T11:32:09.337Z"
+    },
+    {
+      "id": "n-95adbc95-82db-48fc-bda5-9e57d79bc120",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "type": "SOS",
+      "title": "SOS ALERT ACTIVATED",
+      "message": "Emergency notification broadcasted to your trusted contacts and local resources.",
+      "read_at": null,
+      "created_at": "2026-08-12T11:16:52.314Z"
+    },
+    {
+      "id": "n-465bc401-ec5c-4901-94c0-a0c69a3b9561",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "type": "JOURNEY_STARTED",
+      "title": "Safe Journey Started",
+      "message": "Journey to \"aot\" is active. Your trusted contacts have been informed.",
+      "read_at": null,
+      "created_at": "2026-08-12T11:13:28.976Z"
+    },
+    {
+      "id": "n-c302574c-d300-4747-b730-8eb522f8a797",
+      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "type": "SYSTEM",
+      "title": "Email Verification Code",
+      "message": "Your NexGuard email verification code is: 484610. Enter this code to verify your email.",
+      "read_at": null,
+      "created_at": "2026-08-12T11:11:46.594Z"
+    },
+    {
+      "id": "n-aeb16e91-245c-4b0e-98a5-662aa65d43c3",
+      "user_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
+      "type": "SYSTEM",
+      "title": "Account Created",
+      "message": "Welcome to NexGuard! Add trusted contacts to keep your network informed.",
+      "read_at": null,
+      "created_at": "2026-08-12T10:54:44.502Z"
+    },
+    {
+      "id": "n-001",
+      "user_id": "u-alex-demo-001",
+      "type": "SYSTEM",
+      "title": "Welcome to NexGuard",
+      "message": "Your safety is in your control. Set up your trusted contacts and explore Safe Journeys.",
+      "read_at": null,
+      "created_at": "2026-08-12T10:45:23.764Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "al-846047fb-c895-40a2-9066-753adcadd28b",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "JOURNEY_STARTED",
+      "entity_type": "JOURNEY",
+      "entity_id": "j-9ce4d7dc-301d-4068-a46b-9d893bc5d306",
+      "metadata": {
+        "destination": "Salt Lake Sector V, Salt Lake Bypass, CL Block, Sector V, Bidhannagar, Kolkata Metropolitan Area, Rajarhat, North 24 Parganas, West Bengal, 700091, India"
+      },
+      "created_at": "2026-08-12T11:32:38.980Z"
+    },
+    {
+      "id": "al-edd5ff43-3a27-4c67-b2fa-eb2b86fcd2f7",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "JOURNEY_COMPLETED",
+      "entity_type": "JOURNEY",
+      "entity_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
+      "metadata": {},
+      "created_at": "2026-08-12T11:32:09.337Z"
+    },
+    {
+      "id": "al-d7d5c032-d5d3-418f-9784-6bf80625b47a",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "SOS_CANCELLED",
+      "entity_type": "SOS_EVENT",
+      "entity_id": "sos-021641eb-b6f0-4cd5-a8b6-e9a4fb9132fc",
+      "metadata": {},
+      "created_at": "2026-08-12T11:20:07.251Z"
+    },
+    {
+      "id": "al-f9de4b53-63f1-4283-8add-cc87e94323a7",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "SOS_ACTIVATED",
+      "entity_type": "SOS_EVENT",
+      "entity_id": "sos-021641eb-b6f0-4cd5-a8b6-e9a4fb9132fc",
+      "metadata": {
+        "latitude": 40.7128,
+        "longitude": -74.006
+      },
+      "created_at": "2026-08-12T11:16:52.315Z"
+    },
+    {
+      "id": "al-28d0445d-3d00-473a-a424-6f8352d64ad5",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "JOURNEY_STARTED",
+      "entity_type": "JOURNEY",
+      "entity_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
+      "metadata": {
+        "destination": "aot"
+      },
+      "created_at": "2026-08-12T11:13:28.976Z"
+    },
+    {
+      "id": "al-8dc8199c-cdc0-4c96-ae69-ea7e5b46628d",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "ADDED_TRUSTED_CONTACT",
+      "entity_type": "TRUSTED_CONTACT",
+      "entity_id": "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687",
+      "metadata": {
+        "name": "suvha"
+      },
+      "created_at": "2026-08-12T11:12:58.980Z"
+    },
+    {
+      "id": "al-325b0925-e6bf-48f2-b6b4-602119cf1414",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "EMAIL_VERIFIED",
+      "entity_type": "USER",
+      "entity_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "metadata": {},
+      "created_at": "2026-08-12T11:12:03.505Z"
+    },
+    {
+      "id": "al-413acbfb-057d-493e-b183-92293268a2db",
+      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "actor_name": "subha",
+      "action": "USER_REGISTERED_PENDING_VERIFICATION",
+      "entity_type": "USER",
+      "entity_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "metadata": {},
+      "created_at": "2026-08-12T11:11:46.709Z"
+    },
+    {
+      "id": "al-d71dc819-3957-42ac-8239-a944eb3a5433",
+      "actor_user_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
+      "actor_name": "n b h h",
+      "action": "USER_REGISTERED",
+      "entity_type": "USER",
+      "entity_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
+      "metadata": {},
+      "created_at": "2026-08-12T10:54:44.622Z"
+    },
+    {
+      "id": "al-001",
+      "actor_user_id": "u-alex-demo-001",
+      "actor_name": "Alex Johnson",
+      "action": "SYSTEM_INITIALIZED",
+      "entity_type": "SYSTEM",
+      "entity_id": "sys",
+      "created_at": "2026-08-12T10:45:23.764Z"
+    }
+  ],
+  "verification_codes": {}
+}

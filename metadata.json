@@ -1,0 +1,6 @@
+{
+  "name": "NexGuard",
+  "description": "Intelligent, privacy-first women's safety and journey protection platform with real-time location monitoring, safety checks, trusted contact alerts, SOS, and emergency resources.",
+  "requestFramePermissions": ["geolocation", "notifications"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
