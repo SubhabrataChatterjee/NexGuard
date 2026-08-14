@@ -521,7 +521,7 @@ router.post('/auth/verify-email', async (req, res) => {
       avatar_url: user.avatar_url,
       role: user.role,
       status: user.status,
-      email_verified: false,
+      email_verified: true,
       timezone: user.timezone,
       created_at: user.created_at,
       updated_at: user.updated_at,
