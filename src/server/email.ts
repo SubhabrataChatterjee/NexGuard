@@ -1,15 +1,23 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: process.env.BREVO_SMTP_HOST,
+  port: Number(process.env.BREVO_SMTP_PORT || 587),
+  secure: false,
+  auth: {
+    user: process.env.BREVO_SMTP_USER,
+    pass: process.env.BREVO_SMTP_KEY,
+  },
+});
 
 export async function sendVerificationEmail(
   email: string,
   code: string
 ) {
   try {
-    const { data, error } = await resend.emails.send({
-      from: 'NexGuard <noreply@nexguard.app>',
-      to: [email],
+    const info = await transporter.sendMail({
+      from: `"${process.env.BREVO_FROM_NAME || 'NexGuard'}" <${process.env.BREVO_FROM_EMAIL}>`,
+      to: email,
       subject: 'Your NexGuard Verification Code',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
@@ -33,16 +41,11 @@ export async function sendVerificationEmail(
       `,
     });
 
-    if (error) {
-      console.error('❌ Resend error:', error);
-      throw new Error(error.message);
-    }
+    console.log('✅ Verification email sent:', info.messageId);
 
-    console.log('✅ Verification email sent:', data?.id);
-
-    return data;
+    return info;
   } catch (error) {
-    console.error('❌ Failed to send verification email:', error);
+    console.error('❌ Brevo email error:', error);
     throw error;
   }
 }
