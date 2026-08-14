@@ -8,7 +8,7 @@ export async function sendVerificationEmail(
 ) {
   try {
     const { data, error } = await resend.emails.send({
-      from: 'NexGuard <onboarding@resend.dev>',
+      from: 'NexGuard <noreply@nexguard.app>',
       to: [email],
       subject: 'Your NexGuard Verification Code',
       html: `
