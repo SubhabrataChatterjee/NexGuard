@@ -10,8 +10,8 @@
       "status": "ACTIVE",
       "email_verified": true,
       "timezone": "America/New_York",
-      "created_at": "2026-08-12T10:45:23.764Z",
-      "updated_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z",
+      "updated_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "u-admin-demo-001",
@@ -23,39 +23,31 @@
       "status": "ACTIVE",
       "email_verified": true,
       "timezone": "America/New_York",
-      "created_at": "2026-08-12T10:45:23.764Z",
-      "updated_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z",
+      "updated_at": "2026-08-14T05:24:52.059Z"
     },
     {
-      "id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
-      "email": "mnjhbjqj@gmail.com",
-      "full_name": "n b h h",
-      "phone": "78877668900",
+      "id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "email": "sinjuforbusiness@gmail.com",
+      "full_name": "Subhabrata Chatterjee",
       "role": "USER",
       "status": "ACTIVE",
       "email_verified": true,
       "timezone": "America/New_York",
-      "created_at": "2026-08-12T10:54:44.502Z",
-      "updated_at": "2026-08-12T10:54:44.502Z"
-    },
-    {
-      "id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "email": "itzrjbeatzghosh@gmail.com",
-      "full_name": "subha",
-      "phone": "123456789",
-      "role": "USER",
-      "status": "ACTIVE",
-      "email_verified": true,
-      "timezone": "America/New_York",
-      "created_at": "2026-08-12T11:11:46.594Z",
-      "updated_at": "2026-08-12T11:12:03.505Z"
+      "created_at": "2026-08-14T05:32:28.870Z",
+      "updated_at": "2026-08-14T06:07:42.013Z"
     }
   ],
   "passwords": {
-    "u-alex-demo-001": "$2b$10$1Aw1.N2ghr/YZpJce0ESB.yZ9LbmqjWBTefH9ZqGqfyRen9kFncYC",
-    "u-admin-demo-001": "$2b$10$1Aw1.N2ghr/YZpJce0ESB.yZ9LbmqjWBTefH9ZqGqfyRen9kFncYC",
-    "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8": "$2b$10$5vaRwDF3hmGrYG5VwmoYo.wIAqYlHIUugKancq9PnGEl4uis2p5Ou",
-    "u-18d56e2f-fdba-4f48-a931-f269e199b5e1": "$2b$10$o9ynkVpvGc7f0/k2BFPZTuqX0LJNxEcKNurSVNypJ8rwLyQ69P3jy"
+    "u-alex-demo-001": "$2b$10$3yU35NUOphCV0/1EmvK/tegWjPJFoNZQqNC38IHa9frt6/EO/4QtO",
+    "u-admin-demo-001": "$2b$10$3yU35NUOphCV0/1EmvK/tegWjPJFoNZQqNC38IHa9frt6/EO/4QtO",
+    "u-208d6e50-75c7-46c9-83e0-545a44138d1f": "$2b$10$W2Ku.vwag6df2jeqjajmFODuMWlcXxw.kndRIjJ9kvrSiiJeYE6tm"
+  },
+  "verification_codes": {
+    "sinju746@gmail.com": {
+      "code": "486501",
+      "expiresAt": "2026-08-14T06:47:42.362Z"
+    }
   },
   "user_settings": [
     {
@@ -66,30 +58,41 @@
       "arrival_check_enabled": true,
       "default_grace_period_minutes": 10,
       "notification_enabled": true,
-      "created_at": "2026-08-12T10:45:23.764Z",
-      "updated_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z",
+      "updated_at": "2026-08-14T05:24:52.059Z"
     },
     {
-      "id": "s-6bcab457-c5f8-442a-88c8-553af242c386",
-      "user_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
+      "id": "s-880cf697-2d9d-4f57-8a07-6ccff4531623",
+      "user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
       "location_sharing_enabled": true,
       "route_monitoring_enabled": true,
       "arrival_check_enabled": true,
       "default_grace_period_minutes": 10,
       "notification_enabled": true,
-      "created_at": "2026-08-12T10:54:44.502Z",
-      "updated_at": "2026-08-12T10:54:44.502Z"
+      "created_at": "2026-08-14T05:32:28.870Z",
+      "updated_at": "2026-08-14T05:32:28.870Z"
     },
     {
-      "id": "s-3abc9e2d-607e-4c86-adc2-8aa2618f6bf2",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "id": "s-5f174062-06b4-4f12-90eb-26d489a48b3e",
+      "user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
       "location_sharing_enabled": true,
       "route_monitoring_enabled": true,
       "arrival_check_enabled": true,
       "default_grace_period_minutes": 10,
       "notification_enabled": true,
-      "created_at": "2026-08-12T11:11:46.594Z",
-      "updated_at": "2026-08-12T11:11:46.594Z"
+      "created_at": "2026-08-14T05:51:42.099Z",
+      "updated_at": "2026-08-14T05:51:42.099Z"
+    },
+    {
+      "id": "s-11903010-ab4f-4252-ad01-bc50ccc38752",
+      "user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "location_sharing_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "default_grace_period_minutes": 10,
+      "notification_enabled": true,
+      "created_at": "2026-08-14T06:33:23.030Z",
+      "updated_at": "2026-08-14T06:33:23.030Z"
     }
   ],
   "trusted_contacts": [
@@ -106,8 +109,8 @@
         "late_arrival_alerts": true,
         "location_sharing": true
       },
-      "created_at": "2026-08-12T10:45:23.764Z",
-      "updated_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z",
+      "updated_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "tc-002",
@@ -122,8 +125,8 @@
         "late_arrival_alerts": true,
         "location_sharing": true
       },
-      "created_at": "2026-08-12T10:45:23.764Z",
-      "updated_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z",
+      "updated_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "tc-003",
@@ -138,129 +141,14 @@
         "late_arrival_alerts": false,
         "location_sharing": true
       },
-      "created_at": "2026-08-12T10:45:23.764Z",
-      "updated_at": "2026-08-12T10:45:23.764Z"
-    },
-    {
-      "id": "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687",
-      "owner_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "name": "suvha",
-      "relationship": "Father",
-      "phone": "9658745221",
-      "email": "",
-      "status": "ACTIVE",
-      "permissions": {
-        "sos_alerts": true,
-        "late_arrival_alerts": true,
-        "location_sharing": true
-      },
-      "created_at": "2026-08-12T11:12:58.979Z",
-      "updated_at": "2026-08-12T11:12:58.979Z"
+      "created_at": "2026-08-14T05:24:52.059Z",
+      "updated_at": "2026-08-14T05:24:52.059Z"
     }
   ],
-  "journeys": [
-    {
-      "id": "j-9ce4d7dc-301d-4068-a46b-9d893bc5d306",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "destination_name": "Salt Lake Sector V, Salt Lake Bypass, CL Block, Sector V, Bidhannagar, Kolkata Metropolitan Area, Rajarhat, North 24 Parganas, West Bengal, 700091, India",
-      "destination_latitude": 22.5809434,
-      "destination_longitude": 88.4290872,
-      "start_location_name": "Current Location",
-      "start_latitude": 22.908842,
-      "start_longitude": 88.417824,
-      "started_at": "2026-08-12T11:32:38.979Z",
-      "expected_arrival_at": "2026-08-12T11:52:38.979Z",
-      "grace_period_minutes": 10,
-      "actual_arrival_at": null,
-      "status": "ACTIVE",
-      "trusted_contact_ids": [
-        "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687"
-      ],
-      "monitoring_enabled": true,
-      "route_monitoring_enabled": true,
-      "arrival_check_enabled": true,
-      "safety_score": 9.2,
-      "created_at": "2026-08-12T11:32:38.979Z",
-      "updated_at": "2026-08-12T11:32:38.979Z"
-    },
-    {
-      "id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "destination_name": "aot",
-      "destination_latitude": 40.73061,
-      "destination_longitude": -73.935242,
-      "start_location_name": "Current Location",
-      "start_latitude": 40.7128,
-      "start_longitude": -74.006,
-      "started_at": "2026-08-12T11:13:28.976Z",
-      "expected_arrival_at": "2026-08-12T11:33:28.976Z",
-      "grace_period_minutes": 10,
-      "actual_arrival_at": "2026-08-12T11:32:09.337Z",
-      "status": "COMPLETED",
-      "trusted_contact_ids": [
-        "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687"
-      ],
-      "monitoring_enabled": true,
-      "route_monitoring_enabled": true,
-      "arrival_check_enabled": true,
-      "safety_score": 9.2,
-      "created_at": "2026-08-12T11:13:28.976Z",
-      "updated_at": "2026-08-12T11:32:09.337Z"
-    }
-  ],
-  "location_points": [
-    {
-      "id": "lp-3b3bf38b-d4a1-4af8-add2-995d113d2a9e",
-      "journey_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "latitude": 40.7128,
-      "longitude": -74.006,
-      "accuracy_meters": 5,
-      "speed_mps": 1.2,
-      "heading_degrees": 45,
-      "battery_percent": 88,
-      "recorded_at": "2026-08-12T11:13:28.976Z"
-    },
-    {
-      "id": "lp-bbab4ae2-e040-4508-9713-c85f17bf5440",
-      "journey_id": "j-9ce4d7dc-301d-4068-a46b-9d893bc5d306",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "latitude": 22.908842,
-      "longitude": 88.417824,
-      "accuracy_meters": 5,
-      "speed_mps": 1.2,
-      "heading_degrees": 45,
-      "battery_percent": 88,
-      "recorded_at": "2026-08-12T11:32:38.979Z"
-    }
-  ],
+  "journeys": [],
+  "location_points": [],
   "safety_checks": [],
-  "sos_events": [
-    {
-      "id": "sos-021641eb-b6f0-4cd5-a8b6-e9a4fb9132fc",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "journey_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
-      "trigger_type": "MANUAL_SOS",
-      "status": "CANCELLED",
-      "activated_at": "2026-08-12T11:16:52.314Z",
-      "resolved_at": "2026-08-12T11:20:07.251Z",
-      "latitude": 40.7128,
-      "longitude": -74.006,
-      "location_name": "aot",
-      "battery_percent": 78,
-      "notified_contacts": [
-        {
-          "id": "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687",
-          "name": "suvha",
-          "phone": "9658745221",
-          "status": "DELIVERED"
-        }
-      ],
-      "created_at": "2026-08-12T11:16:52.314Z",
-      "updated_at": "2026-08-12T11:20:07.251Z",
-      "resolution_reason": "Accidental trigger / Safe now"
-    }
-  ],
+  "sos_events": [],
   "emergency_resources": [
     {
       "id": "er-001",
@@ -273,7 +161,7 @@
       "is_verified": true,
       "distance_km": 0.8,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-002",
@@ -286,7 +174,7 @@
       "is_verified": true,
       "distance_km": 1.9,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-003",
@@ -294,25 +182,25 @@
       "type": "SAFE_PUBLIC_LOCATION",
       "address": "1091 Women Safety HQ, Salt Lake Sector V, Kolkata, West Bengal 700091",
       "latitude": 22.5802,
-      "longitude": 88.4370,
+      "longitude": 88.437,
       "phone": "1091 / 181 / 112",
       "is_verified": true,
       "distance_km": 1.2,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-004",
       "name": "Bidhannagar Police Commissionerate & Salt Lake Sector V PS",
       "type": "POLICE",
       "address": "Sector V, Salt Lake City, Kolkata, West Bengal 700091, India",
-      "latitude": 22.5790,
-      "longitude": 88.4340,
+      "latitude": 22.579,
+      "longitude": 88.434,
       "phone": "112 / 100 / 033-23671092",
       "is_verified": true,
       "distance_km": 1.5,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-005",
@@ -325,7 +213,7 @@
       "is_verified": true,
       "distance_km": 2.1,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-006",
@@ -338,7 +226,7 @@
       "is_verified": true,
       "distance_km": 0.9,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-007",
@@ -351,7 +239,7 @@
       "is_verified": true,
       "distance_km": 4.2,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-008",
@@ -364,7 +252,7 @@
       "is_verified": true,
       "distance_km": 1.8,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-009",
@@ -377,7 +265,7 @@
       "is_verified": true,
       "distance_km": 3.5,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-010",
@@ -387,10 +275,10 @@
       "latitude": 22.5539,
       "longitude": 88.3551,
       "phone": "101 / 112 / 033-22521165",
-      "is_verified: true,
+      "is_verified": true,
       "distance_km": 2.2,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-011",
@@ -403,7 +291,7 @@
       "is_verified": true,
       "distance_km": 3.1,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     },
     {
       "id": "er-012",
@@ -416,63 +304,81 @@
       "is_verified": true,
       "distance_km": 550,
       "status": "ACTIVE",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     }
   ],
   "notifications": [
     {
-      "id": "n-f164cab7-99de-474d-a6f2-6823de3ad81a",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "type": "JOURNEY_STARTED",
-      "title": "Safe Journey Started",
-      "message": "Journey to \"Salt Lake Sector V, Salt Lake Bypass, CL Block, Sector V, Bidhannagar, Kolkata Metropolitan Area, Rajarhat, North 24 Parganas, West Bengal, 700091, India\" is active. Your trusted contacts have been informed.",
+      "id": "n-0d34483c-aa1d-4876-8dd0-a17b822a91dc",
+      "user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "type": "SYSTEM",
+      "title": "Email Verification Required",
+      "message": "A verification code has been sent to your email address. Please check your inbox.",
       "read_at": null,
-      "created_at": "2026-08-12T11:32:38.979Z"
+      "created_at": "2026-08-14T06:33:23.030Z"
     },
     {
-      "id": "n-d4061347-53d2-45aa-96fe-f7ad19d87f6b",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "type": "JOURNEY_COMPLETED",
-      "title": "Safe Arrival Confirmed",
-      "message": "You arrived safely at aot. Location sharing has automatically ended.",
+      "id": "n-01c80cca-6963-41b8-9942-7f9b14004f6e",
+      "user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "type": "SYSTEM",
+      "title": "New Verification Code",
+      "message": "Your new NexGuard email verification code is: 752125.",
       "read_at": null,
-      "created_at": "2026-08-12T11:32:09.337Z"
+      "created_at": "2026-08-14T06:23:30.973Z"
     },
     {
-      "id": "n-95adbc95-82db-48fc-bda5-9e57d79bc120",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "type": "SOS",
-      "title": "SOS ALERT ACTIVATED",
-      "message": "Emergency notification broadcasted to your trusted contacts and local resources.",
+      "id": "n-72c02d38-bec0-4408-8526-573f0ed30939",
+      "user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "type": "SYSTEM",
+      "title": "New Verification Code",
+      "message": "Your new NexGuard email verification code is: 176385.",
       "read_at": null,
-      "created_at": "2026-08-12T11:16:52.314Z"
+      "created_at": "2026-08-14T06:21:27.691Z"
     },
     {
-      "id": "n-465bc401-ec5c-4901-94c0-a0c69a3b9561",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "type": "JOURNEY_STARTED",
-      "title": "Safe Journey Started",
-      "message": "Journey to \"aot\" is active. Your trusted contacts have been informed.",
+      "id": "n-98235b03-3878-40ec-bec1-b15ce228f780",
+      "user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "type": "SYSTEM",
+      "title": "New Verification Code",
+      "message": "Your new NexGuard email verification code is: 512086.",
       "read_at": null,
-      "created_at": "2026-08-12T11:13:28.976Z"
+      "created_at": "2026-08-14T06:21:14.331Z"
     },
     {
-      "id": "n-c302574c-d300-4747-b730-8eb522f8a797",
-      "user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "id": "n-75c287bf-025d-455d-bbc0-e098baa6c1e7",
+      "user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "type": "SYSTEM",
+      "title": "New Verification Code",
+      "message": "Your new NexGuard email verification code is: 305643.",
+      "read_at": null,
+      "created_at": "2026-08-14T06:07:23.351Z"
+    },
+    {
+      "id": "n-360c9f5b-b97a-4503-83e1-afef3804c478",
+      "user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "type": "SYSTEM",
+      "title": "New Verification Code",
+      "message": "Your new NexGuard email verification code is: 828744.",
+      "read_at": null,
+      "created_at": "2026-08-14T05:52:44.592Z"
+    },
+    {
+      "id": "n-077aaab6-759d-4186-8c15-57e250d08789",
+      "user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
       "type": "SYSTEM",
       "title": "Email Verification Code",
-      "message": "Your NexGuard email verification code is: 484610. Enter this code to verify your email.",
+      "message": "Your NexGuard email verification code is: 716210.",
       "read_at": null,
-      "created_at": "2026-08-12T11:11:46.594Z"
+      "created_at": "2026-08-14T05:51:42.099Z"
     },
     {
-      "id": "n-aeb16e91-245c-4b0e-98a5-662aa65d43c3",
-      "user_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
+      "id": "n-0e4c6e10-4c00-4bd0-96d3-c2bc461740fb",
+      "user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
       "type": "SYSTEM",
-      "title": "Account Created",
-      "message": "Welcome to NexGuard! Add trusted contacts to keep your network informed.",
+      "title": "Email Verification Code",
+      "message": "Your NexGuard email verification code is: 458092. Enter this code to verify your email.",
       "read_at": null,
-      "created_at": "2026-08-12T10:54:44.502Z"
+      "created_at": "2026-08-14T05:32:28.870Z"
     },
     {
       "id": "n-001",
@@ -481,108 +387,299 @@
       "title": "Welcome to NexGuard",
       "message": "Your safety is in your control. Set up your trusted contacts and explore Safe Journeys.",
       "read_at": null,
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     }
   ],
   "audit_logs": [
     {
-      "id": "al-846047fb-c895-40a2-9066-753adcadd28b",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
-      "action": "JOURNEY_STARTED",
-      "entity_type": "JOURNEY",
-      "entity_id": "j-9ce4d7dc-301d-4068-a46b-9d893bc5d306",
-      "metadata": {
-        "destination": "Salt Lake Sector V, Salt Lake Bypass, CL Block, Sector V, Bidhannagar, Kolkata Metropolitan Area, Rajarhat, North 24 Parganas, West Bengal, 700091, India"
-      },
-      "created_at": "2026-08-12T11:32:38.980Z"
-    },
-    {
-      "id": "al-edd5ff43-3a27-4c67-b2fa-eb2b86fcd2f7",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
-      "action": "JOURNEY_COMPLETED",
-      "entity_type": "JOURNEY",
-      "entity_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
+      "id": "al-55c162ef-6e46-479e-a756-4ceb6085e113",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
       "metadata": {},
-      "created_at": "2026-08-12T11:32:09.337Z"
+      "created_at": "2026-08-14T07:20:47.980Z"
     },
     {
-      "id": "al-d7d5c032-d5d3-418f-9784-6bf80625b47a",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
-      "action": "SOS_CANCELLED",
-      "entity_type": "SOS_EVENT",
-      "entity_id": "sos-021641eb-b6f0-4cd5-a8b6-e9a4fb9132fc",
+      "id": "al-cc31efd4-2228-4be9-b616-13b479a8a80c",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
       "metadata": {},
-      "created_at": "2026-08-12T11:20:07.251Z"
+      "created_at": "2026-08-14T07:20:29.753Z"
     },
     {
-      "id": "al-f9de4b53-63f1-4283-8add-cc87e94323a7",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
-      "action": "SOS_ACTIVATED",
-      "entity_type": "SOS_EVENT",
-      "entity_id": "sos-021641eb-b6f0-4cd5-a8b6-e9a4fb9132fc",
-      "metadata": {
-        "latitude": 40.7128,
-        "longitude": -74.006
-      },
-      "created_at": "2026-08-12T11:16:52.315Z"
+      "id": "al-8cdae421-6461-488d-8bd9-817431199b88",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T07:18:43.621Z"
     },
     {
-      "id": "al-28d0445d-3d00-473a-a424-6f8352d64ad5",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
-      "action": "JOURNEY_STARTED",
-      "entity_type": "JOURNEY",
-      "entity_id": "j-fab3601c-0180-45c4-8a17-ee67c9c2c694",
-      "metadata": {
-        "destination": "aot"
-      },
-      "created_at": "2026-08-12T11:13:28.976Z"
+      "id": "al-ae6f7ca9-f33e-4d00-9ad0-88d8377ec042",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T07:17:59.619Z"
     },
     {
-      "id": "al-8dc8199c-cdc0-4c96-ae69-ea7e5b46628d",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
-      "action": "ADDED_TRUSTED_CONTACT",
-      "entity_type": "TRUSTED_CONTACT",
-      "entity_id": "tc-fe7ec3c2-d705-4de3-b907-fe441e46d687",
-      "metadata": {
-        "name": "suvha"
-      },
-      "created_at": "2026-08-12T11:12:58.980Z"
+      "id": "al-d693c2d5-b30c-41b7-b761-c6d74c19c9e6",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T07:17:59.602Z"
     },
     {
-      "id": "al-325b0925-e6bf-48f2-b6b4-602119cf1414",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
+      "id": "al-7fde3bd5-7723-4a43-9739-0fbe5fb64c5b",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T07:13:59.467Z"
+    },
+    {
+      "id": "al-bca24793-2771-4d40-bab0-270ddf0fb385",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T07:05:52.969Z"
+    },
+    {
+      "id": "al-35b7fad1-94af-4c40-9583-66438f48e466",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:55:50.639Z"
+    },
+    {
+      "id": "al-a2ac0146-b18d-4ae7-a88f-0ff848187dde",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:55:31.005Z"
+    },
+    {
+      "id": "al-237ad343-cbe6-432f-b712-6e3626fdd84d",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:54:08.915Z"
+    },
+    {
+      "id": "al-ef4554e6-5418-4c78-bda2-ba68fa1974b5",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:53:52.712Z"
+    },
+    {
+      "id": "al-c378ce2e-5e43-4e95-a8e2-6204281bd37a",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:50:41.370Z"
+    },
+    {
+      "id": "al-34664949-8043-42e3-8ee8-e706d80b1c4c",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:50:21.026Z"
+    },
+    {
+      "id": "al-7af8a87e-29f0-4964-9a4c-7eeea45ee2bb",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:44:22.360Z"
+    },
+    {
+      "id": "al-7ab10c9e-77bf-439a-8f2a-d90bfde3091c",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:44:01.975Z"
+    },
+    {
+      "id": "al-af7ae772-8d4d-477c-8027-ff0a10f5f77f",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:43:58.090Z"
+    },
+    {
+      "id": "al-f0c4bdbe-c484-400e-829e-6315e74b44c9",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "metadata": {},
+      "created_at": "2026-08-14T06:43:40.379Z"
+    },
+    {
+      "id": "al-be46d9fa-a2e0-4fcf-aa2d-81c5db91d84b",
+      "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
+      "actor_name": "Subhabrata",
       "action": "EMAIL_VERIFIED",
       "entity_type": "USER",
-      "entity_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "entity_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
       "metadata": {},
-      "created_at": "2026-08-12T11:12:03.505Z"
+      "created_at": "2026-08-14T06:34:46.922Z"
     },
     {
-      "id": "al-413acbfb-057d-493e-b183-92293268a2db",
-      "actor_user_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
-      "actor_name": "subha",
+      "id": "al-8a3d2159-1c47-4593-8b0a-d0537e825e68",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:32:22.862Z"
+    },
+    {
+      "id": "al-e01536de-836c-49c8-b577-1d92b17a2457",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:32:17.553Z"
+    },
+    {
+      "id": "al-a9f6f375-9ac7-42f4-a413-4c904e70eafa",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:31:37.348Z"
+    },
+    {
+      "id": "al-20a0e627-24f6-4bd4-a3ab-2e4389249b12",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:31:34.033Z"
+    },
+    {
+      "id": "al-9d28eb81-ab40-4a5f-9510-20f9d4dd35a6",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:31:25.383Z"
+    },
+    {
+      "id": "al-c3012efc-881f-46e7-9a64-4accf1d47327",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGIN",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:31:21.147Z"
+    },
+    {
+      "id": "al-5025969b-a86b-4c93-b67e-58fd87c7a65f",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:28:50.555Z"
+    },
+    {
+      "id": "al-4c624f99-5906-4d38-9984-9dfdd6e8cd5e",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "EMAIL_VERIFIED",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:28:32.164Z"
+    },
+    {
+      "id": "al-0f0098cf-adf2-4987-be59-1a9c254ac2e3",
+      "actor_user_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_LOGOUT",
+      "entity_type": "USER",
+      "entity_id": "u-1b01a514-35b1-4e85-b752-21fc15195ec9",
+      "metadata": {},
+      "created_at": "2026-08-14T06:20:13.779Z"
+    },
+    {
+      "id": "al-9d1c177e-84d2-4d98-aea1-0bf3020b1d0d",
+      "actor_user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "EMAIL_VERIFIED",
+      "entity_type": "USER",
+      "entity_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "metadata": {},
+      "created_at": "2026-08-14T06:07:42.015Z"
+    },
+    {
+      "id": "al-79a89414-c338-468e-93ea-600115bfd87f",
+      "actor_user_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
+      "actor_name": "Subhabrata Chatterjee",
       "action": "USER_REGISTERED_PENDING_VERIFICATION",
       "entity_type": "USER",
-      "entity_id": "u-18d56e2f-fdba-4f48-a931-f269e199b5e1",
+      "entity_id": "u-208d6e50-75c7-46c9-83e0-545a44138d1f",
       "metadata": {},
-      "created_at": "2026-08-12T11:11:46.709Z"
-    },
-    {
-      "id": "al-d71dc819-3957-42ac-8239-a944eb3a5433",
-      "actor_user_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
-      "actor_name": "n b h h",
-      "action": "USER_REGISTERED",
-      "entity_type": "USER",
-      "entity_id": "u-372f142c-82d4-40a0-bdb7-1371fda4c4d8",
-      "metadata": {},
-      "created_at": "2026-08-12T10:54:44.622Z"
+      "created_at": "2026-08-14T05:32:28.957Z"
     },
     {
       "id": "al-001",
@@ -591,8 +688,7 @@
       "action": "SYSTEM_INITIALIZED",
       "entity_type": "SYSTEM",
       "entity_id": "sys",
-      "created_at": "2026-08-12T10:45:23.764Z"
+      "created_at": "2026-08-14T05:24:52.059Z"
     }
-  ],
-  "verification_codes": {}
+  ]
 }

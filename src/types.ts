@@ -3,7 +3,7 @@
  */
 
 export type UserRole = 'USER' | 'SAFETY_OPERATOR' | 'ADMIN';
-export type UserStatus = 'ACTIVE' | 'SUSPENDED';
+export type UserStatus = 'ACTIVE' | 'SUSPENDED' | 'INACTIVE';
 
 export interface User {
   id: string;

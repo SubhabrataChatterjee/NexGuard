@@ -47,23 +47,34 @@ export const api = {
     return handleResponse<any>(res);
   },
 
-  async verifyEmail(data: { email: string; code: string }): Promise<AuthResponse> {
-    const res = await fetch(`${API_BASE}/auth/verify-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return handleResponse<AuthResponse>(res);
-  },
+  async verifyEmail(data: {
+  email: string;
+  code: string;
+}): Promise<AuthResponse> {
+  const res = await fetch(`${API_BASE}/auth/verify-email`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
 
-  async resendVerificationCode(email: string): Promise<{ message: string; demo_code?: string }> {
-    const res = await fetch(`${API_BASE}/auth/resend-code`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-    return handleResponse<{ message: string; demo_code?: string }>(res);
-  },
+  return handleResponse<AuthResponse>(res);
+},
+
+  async resendVerificationCode(
+  email: string
+): Promise<{ message: string }> {
+  const res = await fetch(`${API_BASE}/auth/resend-code`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  return handleResponse<{ message: string }>(res);
+},
 
   async getMe(): Promise<{ user: User; settings: UserSettings }> {
     const res = await fetch(`${API_BASE}/auth/me`, {

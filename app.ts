@@ -1,6 +1,8 @@
 import express from 'express';
+import { UserModel } from './src/server/models/User';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
+import { sendVerificationEmail } from './src/server/email';
 import { db } from './src/server/db';
 import { authMiddleware, generateToken, roleGuard, AuthenticatedRequest } from './src/server/auth';
 import { askSafetyAssistant } from './src/server/gemini';
@@ -72,53 +74,114 @@ const logAudit = (actorId: string, actorName: string, action: string, entityType
 // -------------------------------------------------------------
 // AUTH API
 // -------------------------------------------------------------
-router.post('/auth/register', (req, res) => {
+router.post('/auth/register', async (req, res) => {
   try {
     const { email, password, full_name, phone } = req.body || {};
-    if (!email || !password || !full_name) {
-      return res.status(400).json({ error: 'Email, password, and full name are required' });
-    }
 
-    const cleanEmail = sanitizeEmail(String(email));
-    if (!isValidEmail(cleanEmail)) {
+    if (!email || !password || !full_name) {
       return res.status(400).json({
-        error: 'Invalid email address format. Please enter a valid email address (e.g. name@domain.com).'
+        error: 'Email, password, and full name are required',
       });
     }
 
-    const usersList = db.users || [];
-    const existing = usersList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase() === cleanEmail);
-    if (existing) {
-      return res.status(400).json({ error: 'An account with this email address already exists. Please sign in instead.' });
+    const cleanEmail = sanitizeEmail(String(email));
+
+    if (!isValidEmail(cleanEmail)) {
+      return res.status(400).json({
+        error:
+          'Invalid email address format. Please enter a valid email address (e.g. name@domain.com).',
+      });
     }
 
-    // Generate 6-digit email verification code
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const codeExpires = new Date(Date.now() + 15 * 60 * 1000).toISOString();
+    // Check if user already exists
+    const existingUser = await UserModel.findOne({
+      email: cleanEmail,
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
+        error:
+          'An account with this email address already exists. Please sign in instead.',
+      });
+    }
+
+    // ---------------------------------------------------------
+    // GENERATE ONE VERIFICATION CODE
+    // ---------------------------------------------------------
+
+    const verificationCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+
+    const verificationExpires = new Date(
+      Date.now() + 15 * 60 * 1000
+    );
 
     const userId = db.generateId('u');
-    const now = new Date().toISOString();
-    let passwordHash = '';
-    try {
-      const salt = bcrypt.genSaltSync(10);
-      passwordHash = bcrypt.hashSync(String(password), salt);
-    } catch (e) {
-      console.error('Bcrypt hash error:', e);
-      passwordHash = String(password);
-    }
 
-    const newUser: User = {
+    const passwordHash = await bcrypt.hash(
+      String(password),
+      10
+    );
+
+    const now = new Date().toISOString();
+
+    // ---------------------------------------------------------
+    // CREATE USER WITH THAT EXACT CODE
+    // ---------------------------------------------------------
+
+    const newMongoUser = await UserModel.create({
       id: userId,
       email: cleanEmail,
+      passwordHash,
       full_name: String(full_name).trim(),
       phone: phone ? String(phone).trim() : undefined,
       role: 'USER',
       status: 'ACTIVE',
       email_verified: false,
       timezone: 'America/New_York',
+
+      verification_code: verificationCode,
+      verification_expires_at: verificationExpires,
+
       created_at: now,
       updated_at: now,
+    });
+
+    // ---------------------------------------------------------
+    // SEND THE EXACT SAME CODE STORED IN MONGODB
+    // ---------------------------------------------------------
+
+    await sendVerificationEmail(
+      cleanEmail,
+      verificationCode
+    );
+
+    console.log(
+      `📧 Verification email sent to ${cleanEmail}`
+    );
+
+    // ---------------------------------------------------------
+    // USER OBJECT FOR FRONTEND
+    // ---------------------------------------------------------
+
+    const newUser: User = {
+      id: newMongoUser.id,
+      email: newMongoUser.email,
+      full_name: newMongoUser.full_name,
+      phone: newMongoUser.phone,
+      avatar_url: newMongoUser.avatar_url,
+      role: newMongoUser.role,
+      status: newMongoUser.status,
+      email_verified: newMongoUser.email_verified,
+      timezone: newMongoUser.timezone,
+      created_at: newMongoUser.created_at,
+      updated_at: newMongoUser.updated_at,
     };
+
+    // ---------------------------------------------------------
+    // DEFAULT USER SETTINGS
+    // ---------------------------------------------------------
 
     const newSettings: UserSettings = {
       id: db.generateId('s'),
@@ -132,98 +195,167 @@ router.post('/auth/register', (req, res) => {
       updated_at: now,
     };
 
-    db.users.push(newUser);
-    db.passwords[userId] = passwordHash;
-    db.verification_codes[cleanEmail] = { code: verificationCode, expiresAt: codeExpires };
     db.user_settings.push(newSettings);
-    
-    // Default welcome notification with verification code
+
+    // ---------------------------------------------------------
+    // INTERNAL NOTIFICATION
+    // ---------------------------------------------------------
+
     db.notifications.unshift({
       id: db.generateId('n'),
       user_id: userId,
       type: 'SYSTEM',
-      title: 'Email Verification Code',
-      message: `Your NexGuard email verification code is: ${verificationCode}. Enter this code to verify your email.`,
+      title: 'Email Verification Required',
+      message:
+        'A verification code has been sent to your email address. Please check your inbox.',
       read_at: null,
       created_at: now,
     });
 
     db.save();
-    logAudit(userId, newUser.full_name, 'USER_REGISTERED_PENDING_VERIFICATION', 'USER', userId);
+
+    console.log(
+      `✅ MongoDB user registered: ${cleanEmail}`
+    );
+
+    // ---------------------------------------------------------
+    // IMPORTANT:
+    // NEVER RETURN THE VERIFICATION CODE
+    // ---------------------------------------------------------
 
     return res.json({
       requires_verification: true,
       email: cleanEmail,
       user: newUser,
       settings: newSettings,
-      message: `Verification code sent to ${cleanEmail}. (Demo code: ${verificationCode})`,
-      demo_code: verificationCode,
+      message:
+        'Verification code sent to your email address.',
     });
+
   } catch (err: any) {
     console.error('Registration error:', err);
-    return res.status(500).json({ error: err?.message || 'Failed to create account' });
+
+    return res.status(500).json({
+      error:
+        err?.message || 'Failed to create account',
+    });
   }
 });
 
-router.post('/auth/login', (req, res) => {
+router.post('/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body || {};
+
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email address and password are required' });
+      return res.status(400).json({
+        error: 'Email address and password are required',
+      });
     }
 
     const cleanEmail = sanitizeEmail(String(email));
+
     if (!isValidEmail(cleanEmail)) {
       return res.status(400).json({
-        error: 'Invalid email ID format. Please enter a valid email address (e.g. name@domain.com).'
+        error:
+          'Invalid email ID format. Please enter a valid email address.',
       });
     }
 
-    const usersList = db.users || [];
-    const user = usersList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase() === cleanEmail);
-    if (!user) {
+    const mongoUser = await UserModel.findOne({
+      email: cleanEmail,
+    });
+
+    if (!mongoUser) {
       return res.status(401).json({
-        error: 'Login failed: No registered account found with this email ID. Please check your email or create an account.'
+        error:
+          'Login failed: No registered account found with this email ID. Please check your email or create an account.',
       });
     }
 
-    const passwordHash = db.passwords ? db.passwords[user.id] : undefined;
-    let isMatch = false;
-    if (passwordHash && typeof password === 'string') {
-      try {
-        isMatch = bcrypt.compareSync(password, passwordHash);
-      } catch (e) {
-        console.error('Password hash check error:', e);
-        isMatch = (password === passwordHash);
-      }
-    }
+    const isMatch = await bcrypt.compare(
+      String(password),
+      mongoUser.passwordHash
+    );
 
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid email ID or password. Please check your credentials.' });
+      return res.status(401).json({
+        error:
+          'Invalid email ID or password. Please check your credentials.',
+      });
     }
 
-    if (user.status !== 'ACTIVE') {
-      return res.status(403).json({ error: 'Account is suspended' });
+    if (mongoUser.status !== 'ACTIVE') {
+      return res.status(403).json({
+        error: 'Account is suspended',
+      });
     }
 
-    // Handle unverified email address on login
-    if (!user.email_verified) {
-      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-      const codeExpires = new Date(Date.now() + 15 * 60 * 1000).toISOString();
-      db.verification_codes[cleanEmail] = { code: verificationCode, expiresAt: codeExpires };
-      db.save();
+    // ---------------------------------------------------------
+    // EMAIL NOT VERIFIED
+    // ---------------------------------------------------------
 
+    if (!mongoUser.email_verified) {
+
+      // Generate ONE new verification code
+      const verificationCode = Math.floor(
+        100000 + Math.random() * 900000
+      ).toString();
+
+      const verificationExpires = new Date(
+        Date.now() + 15 * 60 * 1000
+      );
+
+      // Store EXACT code in MongoDB
+      mongoUser.verification_code = verificationCode;
+      mongoUser.verification_expires_at = verificationExpires;
+      mongoUser.updated_at = new Date().toISOString();
+
+      await mongoUser.save();
+
+      // Send EXACT SAME code
+      await sendVerificationEmail(
+        cleanEmail,
+        verificationCode
+      );
+
+      console.log(
+        `📧 Login verification email sent to ${cleanEmail}`
+      );
+
+      // DO NOT RETURN THE CODE
       return res.json({
         requires_verification: true,
         email: cleanEmail,
-        message: `Email verification required. Verification code sent to ${cleanEmail}. (Demo code: ${verificationCode})`,
-        demo_code: verificationCode,
+        message:
+          'A new verification code has been sent to your email address.',
       });
     }
 
-    let settings = (db.user_settings || []).find((s) => s && s.user_id === user.id);
+    // ---------------------------------------------------------
+    // NORMAL LOGIN
+    // ---------------------------------------------------------
+
+    const user: User = {
+      id: mongoUser.id,
+      email: mongoUser.email,
+      full_name: mongoUser.full_name,
+      phone: mongoUser.phone,
+      avatar_url: mongoUser.avatar_url,
+      role: mongoUser.role,
+      status: mongoUser.status,
+      email_verified: mongoUser.email_verified,
+      timezone: mongoUser.timezone,
+      created_at: mongoUser.created_at,
+      updated_at: mongoUser.updated_at,
+    };
+
+    let settings = (db.user_settings || []).find(
+      (s) => s && s.user_id === user.id
+    );
+
     if (!settings) {
       const now = new Date().toISOString();
+
       settings = {
         id: db.generateId('s'),
         user_id: user.id,
@@ -235,53 +367,135 @@ router.post('/auth/login', (req, res) => {
         created_at: now,
         updated_at: now,
       };
+
       db.user_settings.push(settings);
       db.save();
     }
 
-    logAudit(user.id, user.full_name, 'USER_LOGIN', 'USER', user.id);
+    logAudit(
+      user.id,
+      user.full_name,
+      'USER_LOGIN',
+      'USER',
+      user.id
+    );
+
     const token = generateToken(user);
-    return res.json({ token, user, settings });
+
+    console.log(
+      `✅ MongoDB login successful: ${cleanEmail}`
+    );
+
+    return res.json({
+      token,
+      user,
+      settings,
+    });
+
   } catch (err: any) {
     console.error('Login error:', err);
-    return res.status(500).json({ error: err?.message || 'Failed to authenticate' });
+
+    return res.status(500).json({
+      error:
+        err?.message || 'Failed to authenticate',
+    });
   }
 });
 
-router.post('/auth/verify-email', (req, res) => {
+router.post('/auth/verify-email', async (req, res) => {
   try {
     const { email, code } = req.body || {};
+
     if (!email || !code) {
-      return res.status(400).json({ error: 'Email address and verification code are required' });
+      return res.status(400).json({
+        error:
+          'Email address and verification code are required',
+      });
     }
 
     const cleanEmail = sanitizeEmail(String(email));
+
     if (!isValidEmail(cleanEmail)) {
-      return res.status(400).json({ error: 'Invalid email address format' });
+      return res.status(400).json({
+        error: 'Invalid email address format',
+      });
     }
 
-    const usersList = db.users || [];
-    const user = usersList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase() === cleanEmail);
+    // Find user
+    const user = await UserModel.findOne({
+      email: cleanEmail,
+    });
+
     if (!user) {
-      return res.status(404).json({ error: 'No account found with this email ID' });
+      return res.status(404).json({
+        error: 'No account found with this email ID',
+      });
     }
 
-    const storedCodeObj = db.verification_codes[cleanEmail];
-    if (!storedCodeObj || storedCodeObj.code !== String(code).trim()) {
-      return res.status(400).json({ error: 'Invalid verification code. Please check and try again.' });
+    // Already verified
+    if (user.email_verified) {
+      return res.status(400).json({
+        error: 'This email address is already verified.',
+      });
     }
 
-    if (new Date(storedCodeObj.expiresAt) < new Date()) {
-      return res.status(400).json({ error: 'Verification code has expired. Please request a new code.' });
+    // Get the ONLY code stored in MongoDB
+    const storedCode = user.verification_code;
+    const storedExpiry = user.verification_expires_at;
+
+    if (!storedCode || !storedExpiry) {
+      return res.status(400).json({
+        error:
+          'No active verification code found. Please request a new code.',
+      });
     }
+
+    // Compare entered code with MongoDB code
+    if (
+      String(code).trim() !==
+      String(storedCode).trim()
+    ) {
+      return res.status(400).json({
+        error:
+          'Invalid verification code. Please check your email and try again.',
+      });
+    }
+
+    // Check expiry
+    if (new Date(storedExpiry) < new Date()) {
+      return res.status(400).json({
+        error:
+          'Verification code has expired. Please request a new code.',
+      });
+    }
+
+    // ---------------------------------------------------------
+    // VERIFICATION SUCCESSFUL
+    // ---------------------------------------------------------
+
+    const now = new Date().toISOString();
 
     user.email_verified = true;
-    user.updated_at = new Date().toISOString();
+    user.updated_at = now;
+
+    // Delete verification information
+    user.verification_code = undefined;
+    user.verification_expires_at = undefined;
+
+    await user.save();
+
+    // Remove old temporary code if it exists
     delete db.verification_codes[cleanEmail];
 
-    let settings = db.user_settings.find((s) => s.user_id === user.id);
+    // ---------------------------------------------------------
+    // SETTINGS
+    // ---------------------------------------------------------
+
+    let settings = db.user_settings.find(
+      (s) => s.user_id === user.id
+    );
+
     if (!settings) {
-      const now = new Date().toISOString();
       settings = {
         id: db.generateId('s'),
         user_id: user.id,
@@ -293,56 +507,170 @@ router.post('/auth/verify-email', (req, res) => {
         created_at: now,
         updated_at: now,
       };
+
       db.user_settings.push(settings);
     }
 
     db.save();
-    logAudit(user.id, user.full_name, 'EMAIL_VERIFIED', 'USER', user.id);
 
-    const token = generateToken(user);
-    return res.json({ token, user, settings, message: 'Email address successfully verified!' });
+    const verifiedUser: User = {
+      id: user.id,
+      email: user.email,
+      full_name: user.full_name,
+      phone: user.phone,
+      avatar_url: user.avatar_url,
+      role: user.role,
+      status: user.status,
+      email_verified: false,
+      timezone: user.timezone,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+    };
+
+    logAudit(
+      user.id,
+      user.full_name,
+      'EMAIL_VERIFIED',
+      'USER',
+      user.id
+    );
+
+    const token = generateToken(verifiedUser);
+
+    return res.json({
+      token,
+      user: verifiedUser,
+      settings,
+      message:
+        'Email address successfully verified!',
+    });
+
   } catch (err: any) {
-    console.error('Email verification error:', err);
-    return res.status(500).json({ error: 'Failed to verify email address' });
+    console.error(
+      'Email verification error:',
+      err
+    );
+
+    return res.status(500).json({
+      error:
+        err?.message ||
+        'Failed to verify email address',
+    });
   }
 });
 
-router.post('/auth/resend-code', (req, res) => {
+router.post('/auth/resend-code', async (req, res) => {
   try {
     const { email } = req.body || {};
+
+    if (!email) {
+      return res.status(400).json({
+        error: 'Email address is required',
+      });
+    }
+
     const cleanEmail = sanitizeEmail(String(email));
+
     if (!isValidEmail(cleanEmail)) {
-      return res.status(400).json({ error: 'Invalid email ID format' });
+      return res.status(400).json({
+        error: 'Invalid email ID format',
+      });
     }
 
-    const usersList = db.users || [];
-    const user = usersList.find((u) => u && typeof u.email === 'string' && u.email.toLowerCase() === cleanEmail);
+    // Find user
+    const user = await UserModel.findOne({
+      email: cleanEmail,
+    });
+
     if (!user) {
-      return res.status(404).json({ error: 'Account not found with this email ID' });
+      return res.status(404).json({
+        error:
+          'Account not found with this email ID',
+      });
     }
 
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const codeExpires = new Date(Date.now() + 15 * 60 * 1000).toISOString();
-    db.verification_codes[cleanEmail] = { code: verificationCode, expiresAt: codeExpires };
+    // Already verified
+    if (user.email_verified) {
+      return res.status(400).json({
+        error:
+          'This email address is already verified.',
+      });
+    }
+
+    // ---------------------------------------------------------
+    // GENERATE ONE NEW CODE
+    // ---------------------------------------------------------
+
+    const verificationCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+
+    const verificationExpires = new Date(
+      Date.now() + 15 * 60 * 1000
+    );
+
+    // ---------------------------------------------------------
+    // SAVE THAT EXACT CODE
+    // ---------------------------------------------------------
+
+    user.verification_code = verificationCode;
+    user.verification_expires_at = verificationExpires;
+    user.updated_at = new Date().toISOString();
+
+    await user.save();
+
+    // ---------------------------------------------------------
+    // SEND THAT EXACT SAME CODE
+    // ---------------------------------------------------------
+
+    await sendVerificationEmail(
+      cleanEmail,
+      verificationCode
+    );
+
+    console.log(
+      `📧 Resend verification email sent to ${cleanEmail}`
+    );
+
+    // ---------------------------------------------------------
+    // INTERNAL NOTIFICATION
+    // ---------------------------------------------------------
 
     db.notifications.unshift({
       id: db.generateId('n'),
       user_id: user.id,
       type: 'SYSTEM',
-      title: 'New Verification Code',
-      message: `Your new NexGuard email verification code is: ${verificationCode}.`,
+      title: 'New Verification Code Sent',
+      message:
+        'A new verification code has been sent to your email address.',
       read_at: null,
       created_at: new Date().toISOString(),
     });
 
     db.save();
+
+    // ---------------------------------------------------------
+    // NEVER RETURN THE CODE
+    // ---------------------------------------------------------
+
     return res.json({
-      message: `New verification code generated and sent to ${cleanEmail}. (Demo code: ${verificationCode})`,
-      demo_code: verificationCode,
+      success: true,
+      email: cleanEmail,
+      message:
+        'A new verification code has been sent to your email address.',
     });
+
   } catch (err: any) {
-    console.error('Resend code error:', err);
-    return res.status(500).json({ error: 'Failed to resend verification code' });
+    console.error(
+      'Resend code error:',
+      err
+    );
+
+    return res.status(500).json({
+      error:
+        err?.message ||
+        'Failed to resend verification code',
+    });
   }
 });
 
