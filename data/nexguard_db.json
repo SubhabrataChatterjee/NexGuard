@@ -93,6 +93,39 @@
       "notification_enabled": true,
       "created_at": "2026-08-14T06:33:23.030Z",
       "updated_at": "2026-08-14T06:33:23.030Z"
+    },
+    {
+      "id": "s-6ad5fb92-7798-4991-b2d9-dbc4832d5068",
+      "user_id": "u-ef31b3af-f16c-430c-ba5c-11f453834ed1",
+      "location_sharing_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "default_grace_period_minutes": 10,
+      "notification_enabled": true,
+      "created_at": "2026-08-15T15:37:59.695Z",
+      "updated_at": "2026-08-15T15:37:59.695Z"
+    },
+    {
+      "id": "s-cdeba5cf-61af-40b4-a44e-b6482f86e8bf",
+      "user_id": "u-d5d4e3c0-1ccb-414f-b1eb-dc4fe093a01e",
+      "location_sharing_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "default_grace_period_minutes": 10,
+      "notification_enabled": true,
+      "created_at": "2026-08-15T15:38:31.193Z",
+      "updated_at": "2026-08-15T15:38:31.193Z"
+    },
+    {
+      "id": "s-7b20ee47-9874-4f38-a4b0-e02dffce74ca",
+      "user_id": "u-d1c4c218-bc8e-4949-8515-65b02cb58383",
+      "location_sharing_enabled": true,
+      "route_monitoring_enabled": true,
+      "arrival_check_enabled": true,
+      "default_grace_period_minutes": 10,
+      "notification_enabled": true,
+      "created_at": "2026-08-15T16:00:38.608Z",
+      "updated_at": "2026-08-15T16:00:38.608Z"
     }
   ],
   "trusted_contacts": [
@@ -309,6 +342,33 @@
   ],
   "notifications": [
     {
+      "id": "n-89454d52-4e89-4b3d-905d-dd3edf1d2343",
+      "user_id": "u-d1c4c218-bc8e-4949-8515-65b02cb58383",
+      "type": "SYSTEM",
+      "title": "Welcome to NexGuard",
+      "message": "Your email has been successfully verified and your NexGuard account is now active.",
+      "read_at": null,
+      "created_at": "2026-08-15T16:00:38.608Z"
+    },
+    {
+      "id": "n-15070ca4-1de0-40ce-a8d5-48d26891b507",
+      "user_id": "u-d5d4e3c0-1ccb-414f-b1eb-dc4fe093a01e",
+      "type": "SYSTEM",
+      "title": "Email Verification Required",
+      "message": "A verification code has been sent to your email address. Please check your inbox.",
+      "read_at": null,
+      "created_at": "2026-08-15T15:38:31.193Z"
+    },
+    {
+      "id": "n-bf086a3c-6b26-4072-893e-8553e7be1345",
+      "user_id": "u-ef31b3af-f16c-430c-ba5c-11f453834ed1",
+      "type": "SYSTEM",
+      "title": "Email Verification Required",
+      "message": "A verification code has been sent to your email address. Please check your inbox.",
+      "read_at": null,
+      "created_at": "2026-08-15T15:37:59.695Z"
+    },
+    {
       "id": "n-0d34483c-aa1d-4876-8dd0-a17b822a91dc",
       "user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
       "type": "SYSTEM",
@@ -391,6 +451,16 @@
     }
   ],
   "audit_logs": [
+    {
+      "id": "al-1e39ddec-33fa-4172-990b-22b2759f91e8",
+      "actor_user_id": "u-d1c4c218-bc8e-4949-8515-65b02cb58383",
+      "actor_name": "Subhabrata Chatterjee",
+      "action": "USER_REGISTERED_AND_EMAIL_VERIFIED",
+      "entity_type": "USER",
+      "entity_id": "u-d1c4c218-bc8e-4949-8515-65b02cb58383",
+      "metadata": {},
+      "created_at": "2026-08-15T16:00:38.773Z"
+    },
     {
       "id": "al-55c162ef-6e46-479e-a756-4ceb6085e113",
       "actor_user_id": "u-5aaf8daa-3a8a-4f6a-94a7-9f974c156ce8",
