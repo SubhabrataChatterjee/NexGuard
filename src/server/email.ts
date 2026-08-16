@@ -21,6 +21,13 @@ export async function sendVerificationEmail(
   code: string
 ) {
   try {
+    console.log("📧 SMTP CONFIG CHECK:", {
+  host: process.env.BREVO_SMTP_HOST || "smtp-relay.brevo.com",
+  port: Number(process.env.BREVO_SMTP_PORT || 587),
+  userPresent: !!process.env.BREVO_SMTP_USER,
+  passPresent: !!process.env.BREVO_SMTP_PASS,
+  fromEmail: process.env.BREVO_FROM_EMAIL,
+});
     const info = await transporter.sendMail({
       from: `"${process.env.BREVO_FROM_NAME || "NexGuard"}" <${process.env.BREVO_FROM_EMAIL}>`,
       to: email,
