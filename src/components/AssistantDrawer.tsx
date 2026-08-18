@@ -45,7 +45,7 @@ export const AssistantDrawer: React.FC<AssistantDrawerProps> = ({ isOpen, onClos
         {
           id: `err-${Date.now()}`,
           sender: 'assistant',
-          text: 'I encountered an error connecting to my safety knowledge base. If you feel in danger, please tap the red SOS button or call emergency services (911).',
+          text: 'I encountered an error connecting to my safety knowledge base. If you feel in danger, please tap the red SOS button or call emergency services (100).',
         },
       ]);
     } finally {
